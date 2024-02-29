@@ -5,12 +5,13 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
-const mongoDB = "mongodb+srv://jwaddell10:Jone4085$@cardata.3kdtlmw.mongodb.net/?retryWrites=true&w=majority&appName=CarData";
+const mongoDB =
+  "mongodb+srv://jwaddell10:Jone4085$@cardata.3kdtlmw.mongodb.net/?retryWrites=true&w=majority&appName=CarData";
 
 main().catch((err) => console.log(err));
 async function main() {
   await mongoose.connect(mongoDB);
-  console.log(mongoDB, 'this is db')
+  console.log(mongoDB, "this is db");
 }
 
 const indexRouter = require("./routes/index");
