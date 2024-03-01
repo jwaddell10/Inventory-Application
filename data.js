@@ -1,5 +1,10 @@
 #! /usr/bin/env node
+const mongoose = require('mongoose');
+mongoose.set('strictQuery', false);
+const mongoDB =
+  "mongodb+srv://jwaddell10:Jone4085$@cardata.3kdtlmw.mongodb.net/?retryWrites=true&w=majority&appName=CarData";
 
+  
 console.log(
   'This script populates some test books, authors, genres and bookinstances to your database. Specified database as argument - e.g.: node populatedb "mongodb+srv://cooluser:coolpassword@cluster0.lz91hw2.mongodb.net/local_library?retryWrites=true&w=majority"'
 );
@@ -18,7 +23,7 @@ const vehicletypes = [];
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
 
-const mongoDB = userArgs[0];
+// const mongoDB = userArgs[0];
 
 main().catch((err) => console.log(err));
 
