@@ -23,3 +23,5 @@ const VehicleTypeSchema = {
 //     enum: ["Car", "Truck", "SUV"],
 //     message: "Type must be `Car`, `Truck`, or `SUV`",
 //   },
+
+module.exports = mongoose.model("Vehicle Type Schema", VehicleTypeSchema)
