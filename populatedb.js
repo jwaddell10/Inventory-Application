@@ -147,6 +147,5 @@ async function createVehicle() {
     vehicleCreate(2, "Honda", models[2], vehicletypes[1]),
     vehicleCreate(3, "Honda", models[3], vehicletypes[2]),
     vehicleCreate(4, "Honda", models[4], vehicletypes[2]),
-    vehicleCreate(5, "Honda", models[5], vehicletypes[2]),
   ]);
 }
