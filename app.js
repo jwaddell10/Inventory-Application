@@ -5,8 +5,11 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
+
+//stuck on how to populate database!
+
 const mongoDB =
-  "mongodb+srv://jwaddell10:Jone4085$@cardata.3kdtlmw.mongodb.net/?retryWrites=true&w=majority&appName=CarData";
+  `mongodb+srv://jwaddell10:Thatsfunny1%24@cardata.3kdtlmw.mongodb.net/?retryWrites=true&w=majority&appName=CarData`;
 
 main().catch((err) => console.log(err));
 async function main() {
