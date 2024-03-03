@@ -1,8 +1,8 @@
 #! /usr/bin/env node
-const mongoose = require('mongoose');
-mongoose.set('strictQuery', false);
+const mongoose = require("mongoose");
+mongoose.set("strictQuery", false);
 const mongoDB =
-  "mongodb+srv://<jwaddell10>:<Jone4085$>@cardata.3kdtlmw.mongodb.net/?retryWrites=true&w=majority&appName=CarData";
+  "mongodb+srv://jwaddell:Thatsfunny1@cluster0.6m5heg5.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 console.log(
   'This script populates some test books, authors, genres and bookinstances to your database. Specified database as argument - e.g.: node populatedb "mongodb+srv://cooluser:coolpassword@cluster0.lz91hw2.mongodb.net/local_library?retryWrites=true&w=majority"'
@@ -18,9 +18,6 @@ const VehicleType = require("./models/vehicletype");
 const vehicles = [];
 const models = [];
 const vehicletypes = [];
-
-const mongoose = require("mongoose");
-mongoose.set("strictQuery", false);
 
 // const mongoDB = userArgs[0];
 
@@ -47,9 +44,9 @@ async function vehicleTypeCreate(index, type) {
   console.log(`Added vehicletype: ${type}`);
 }
 
-async function modelCreate(index, model_name, summary, number_in_stock, price) {
+async function modelCreate(index, modelname, summary, number_in_stock, price) {
   const modeldetail = {
-    model_name: model_name,
+    modelname: modelname,
     summary: summary,
     number_in_stock: number_in_stock,
     price: price,
@@ -59,7 +56,7 @@ async function modelCreate(index, model_name, summary, number_in_stock, price) {
 
   await model.save();
   models[index] = model;
-  console.log(`Added model: ${model_name}`);
+  console.log(`Added model: ${modelname}`);
 }
 
 async function vehicleCreate(index, make, model, vehicle_type) {

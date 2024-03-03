@@ -6,10 +6,8 @@ const logger = require("morgan");
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
 
-//stuck on how to populate database!
-
 const mongoDB =
-  `mongodb+srv://jwaddell10:Thatsfunny1%24@cardata.3kdtlmw.mongodb.net/?retryWrites=true&w=majority&appName=CarData`;
+  "mongodb+srv://jwaddell:Thatsfunny1@cluster0.6m5heg5.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 main().catch((err) => console.log(err));
 async function main() {

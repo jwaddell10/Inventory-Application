@@ -2,12 +2,11 @@
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
 const mongoDB =
-  "mongodb+srv://jwaddell10:Jone4085$@cardata.3kdtlmw.mongodb.net/?retryWrites=true&w=majority&appName=CarData";
+  "mongodb+srv://<jwaddell10>:<Thatsfunny1>@cardata.3kdtlmw.mongodb.net/?retryWrites=true&w=majority&appName=CarData";
 
   
 console.log(
-  'This script populates some test books, authors, genres and bookinstances to your database. Specified database as argument - e.g.: node populatedb "mongodb+srv://cooluser:coolpassword@cluster0.lz91hw2.mongodb.net/local_library?retryWrites=true&w=majority"'
-);
+'this script populates db with some test vehicles, models, vehicletypes');
 
 // Get arguments passed on command line
 const userArgs = process.argv.slice(2);
@@ -147,10 +146,10 @@ async function createVehicle() {
   console.log("Adding Books");
   await Promise.all([
     vehicleCreate(0, "Honda", models[0], vehicletypes[0]),
-    bookCreate(1, "Honda", models[1], vehicletypes[0]),
-    bookCreate(2, "Honda", models[2], vehicletypes[1]),
-    bookCreate(3, "Honda", models[3], vehicletypes[2]),
-    bookCreate(4, "Honda", models[4], vehicletypes[2]),
-    bookCreate(5, "Honda", models[5], vehicletypes[2]),
+    vehicleCreate(1, "Honda", models[1], vehicletypes[0]),
+    vehicleCreate(2, "Honda", models[2], vehicletypes[1]),
+    vehicleCreate(3, "Honda", models[3], vehicletypes[2]),
+    vehicleCreate(4, "Honda", models[4], vehicletypes[2]),
+    vehicleCreate(5, "Honda", models[5], vehicletypes[2]),
   ]);
 }
