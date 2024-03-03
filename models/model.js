@@ -33,4 +33,4 @@ const ModelSchema = new Schema({
 //   });
 
 // Export model
-module.exports = mongoose.model("Model Schema", ModelSchema);
+module.exports = mongoose.model("Model", ModelSchema);

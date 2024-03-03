@@ -24,4 +24,4 @@ const VehicleTypeSchema = {
 //     message: "Type must be `Car`, `Truck`, or `SUV`",
 //   },
 
-module.exports = mongoose.model("Vehicle Type Schema", VehicleTypeSchema)
+module.exports = mongoose.model("VehicleType", VehicleTypeSchema)
