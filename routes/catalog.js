@@ -4,7 +4,7 @@ const router = express.Router();
 const vehicle_controller = require("../controllers/vehicleController");
 const model_controller = require("../controllers/modelController");
 const vehicle_instance_controller = require("../controllers/vehicleInstanceController");
-const vehicle_type_controller = require("../controllers/vehicleType");
+const vehicle_type_controller = require("../controllers/vehicleTypeController");
 
 // VEHICLE ROUTES //
 
