@@ -5,7 +5,8 @@ const vehicle_controller = require("../controllers/vehicleController");
 const model_controller = require("../controllers/modelController");
 const vehicle_instance_controller = require("../controllers/vehicleInstanceController");
 const vehicle_type_controller = require("../controllers/vehicleType");
-const vehicle = require("../models/vehicle");
+
+// VEHICLE ROUTES //
 
 router.get("/", vehicle_controller.index);
 
@@ -22,3 +23,59 @@ router.get("/vehicle/:id/update", vehicle_controller.vehicle_update_get);
 router.get("/vehicle/:id/update", vehicle_controller.vehicle_update_post);
 
 router.get("/vehicle/:id", vehicle_controller.vehicle_detail);
+
+router.get("/vehicles", vehicle_controller.vehicle_list);
+
+// MODEL ROUTES //
+
+router.get("/model/create", model_controller.model_create_get);
+
+router.get("/model/create", model_controller.model_create_post);
+
+router.get("/model/:id/delete", model_controller.model_delete_get);
+
+router.get("/model/:id/delete", model_controller.model_delete_post);
+
+router.get("/model/:id/update", model_controller.model_update_get);
+
+router.get("/model/:id/update", model_controller.model_update_post);
+
+router.get("/model/:id", model_controller.model_detail);
+
+router.get("/models", model_controller.model_list);
+
+// VEHICLE INSTANCE ROUTES //
+
+router.get("/vehicleinstance/create", vehicle_instance_controller.vehicleinstance_create_get);
+
+router.get("/vehicleinstance/create", vehicle_instance_controller.vehicleinstance_create_post);
+
+router.get("/vehicleinstance/:id/delete", vehicle_instance_controller.vehicleinstance_delete_get);
+
+router.get("/vehicleinstance/:id/delete", vehicle_instance_controller.vehicleinstance_delete_post);
+
+router.get("/vehicleinstance/:id/update", vehicle_instance_controller.vehicleinstance_update_get);
+
+router.get("/vehicleinstance/:id/update", vehicle_instance_controller.vehicleinstance_update_post);
+
+router.get("/vehicleinstance/:id", vehicle_instance_controller.vehicleinstance_detail);
+
+router.get("/vehicleinstances", vehicle_instance_controller.vehicleinstance_list);
+
+// VEHICLE TYPE ROUTES //
+
+router.get("/vehicletype/create", vehicle_type_controller.vehicletype_create_get);
+
+router.get("/vehicletype/create", vehicle_type_controller.vehicletype_create_post);
+
+router.get("/vehicletype/:id/delete", vehicle_type_controller.vehicletype_delete_get);
+
+router.get("/vehicletype/:id/delete", vehicle_type_controller.vehicletype_delete_post);
+
+router.get("/vehicletype/:id/update", vehicle_type_controller.vehicletype_update_get);
+
+router.get("/vehicletype/:id/update", vehicle_type_controller.vehicletype_update_post);
+
+router.get("/vehicletype/:id", vehicle_type_controller.vehicletype_detail);
+
+router.get("/vehicletype", vehicle_type_controller.vehicletype_list);
