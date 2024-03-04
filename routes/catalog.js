@@ -2,13 +2,14 @@ const express = require("express");
 const router = express.Router();
 
 const vehicle_controller = require("../controllers/vehicleController");
+console.log(vehicle_controller.vehicle_list, 'this is vehiclecontroller')
 const model_controller = require("../controllers/modelController");
 const vehicle_instance_controller = require("../controllers/vehicleInstanceController");
 const vehicle_type_controller = require("../controllers/vehicleTypeController");
 
 // VEHICLE ROUTES //
 
-router.get("/", vehicle_controller.index);
+router.get("/", vehicle_controller.vehicle_list);
 
 router.get("/vehicle/create", vehicle_controller.vehicle_create_get);
 
