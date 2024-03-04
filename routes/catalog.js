@@ -78,4 +78,6 @@ router.get("/vehicletype/:id/update", vehicle_type_controller.vehicletype_update
 
 router.get("/vehicletype/:id", vehicle_type_controller.vehicletype_detail);
 
-router.get("/vehicletype", vehicle_type_controller.vehicletype_list);
+router.get("/vehicletypes", vehicle_type_controller.vehicletype_list);
+
+module.exports = router;
