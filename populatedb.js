@@ -14,10 +14,12 @@ const userArgs = process.argv.slice(2);
 const Vehicle = require("./models/vehicle");
 const Model = require("./models/model");
 const VehicleType = require("./models/vehicletype");
+const VehicleInstance = require("./models/vehicleinstance");
 
 const vehicles = [];
 const models = [];
 const vehicletypes = [];
+const vehicleinstances = [];
 
 // const mongoDB = userArgs[0];
 
@@ -30,6 +32,7 @@ async function main() {
   await createVehicleType();
   await createModel();
   await createVehicle();
+  await createVehicleInstance();
   console.log("Debug: Closing mongoose");
   mongoose.connection.close();
 }
@@ -70,6 +73,19 @@ async function vehicleCreate(index, make, model, vehicle_type) {
   await vehicle.save();
   vehicles[index] = vehicle;
   console.log(`Added vehicle: ${make}`);
+}
+
+async function vehicleInstanceCreate(index, vehicle, status, due_back) {
+  const vehicleinstancedetail = {
+    vehicle: vehicle,
+    status: status,
+    due_back: due_back,
+  }
+
+  const vehicleinstance = new VehicleInstance(vehicleinstancedetail)
+  await vehicleinstance.save();
+  vehicleinstances[index] = vehicleinstance;
+  console.log(`Added vehicle instance: ${vehicle}`)
 }
 
 async function createVehicleType() {
@@ -137,6 +153,13 @@ async function createModel() {
       4000
     ),
   ]);
+}
+
+async function createVehicleInstance() {
+  console.log('adding vehicle instances');
+  await Promise.all([
+    0, vehicles[0],
+  ])
 }
 
 async function createVehicle() {
