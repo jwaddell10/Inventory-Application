@@ -1,6 +1,8 @@
 const Vehicle = require("../models/vehicle");
 const asyncHandler = require("express-async-handler");
 
+//count number of vehicles
+
 exports.vehicle_list = asyncHandler(async (req, res, next) => {
   res.send("NOT IMPLEMENTED: Vehicle list");
 });
