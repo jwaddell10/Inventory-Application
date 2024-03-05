@@ -9,7 +9,7 @@ const vehicle_type_controller = require("../controllers/vehicleTypeController");
 
 // VEHICLE ROUTES //
 
-router.get("/", vehicle_controller.vehicle_list);
+router.get("/", vehicle_controller.index);
 
 router.get("/vehicle/create", vehicle_controller.vehicle_create_get);
 

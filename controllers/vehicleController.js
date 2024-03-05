@@ -1,5 +1,35 @@
 const Vehicle = require("../models/vehicle");
+const Model = require("../models/model");
+const VehicleInstance = require("../models/vehicleinstance");
+const VehicleType = require("../models/vehicletype");
 const asyncHandler = require("express-async-handler");
+
+//count all vehicles
+
+exports.index = asyncHandler(async (req, res, next) => {
+    const [
+        numVehicles,
+        numModels,
+        numVehicleInstances,
+        numAvailableVehicleInstances,
+        numVehicleTypes,
+    ] = await Promise.all([
+        Vehicle.countDocuments({}).exec(),
+        Model.countDocuments({}).exec(),
+        VehicleInstance.countDocuments({}).exec(),
+        VehicleInstance.countDocuments({ status: "Available" }).exec(),
+        VehicleType.countDocuments({}).exec(),
+    ]);
+
+    res.render("index", {
+        title: "Vehicle Inventory Home",
+        vehicle_count: numVehicles,
+        model_count: numModels,
+        vehicle_instance_count: numVehicleInstances,
+        vehicle_instance_available_count: numAvailableVehicleInstances,
+        vehicle_type_count: numVehicleTypes,
+    })
+})
 
 exports.vehicle_list = asyncHandler(async (req, res, next) => {
   res.send("NOT IMPLEMENTED: Vehicle list");
