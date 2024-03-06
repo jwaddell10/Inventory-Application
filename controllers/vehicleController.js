@@ -7,32 +7,40 @@ const asyncHandler = require("express-async-handler");
 //count all vehicles
 
 exports.index = asyncHandler(async (req, res, next) => {
-    const [
-        numVehicles,
-        numModels,
-        numVehicleInstances,
-        numAvailableVehicleInstances,
-        numVehicleTypes,
-    ] = await Promise.all([
-        Vehicle.countDocuments({}).exec(),
-        Model.countDocuments({}).exec(),
-        VehicleInstance.countDocuments({}).exec(),
-        VehicleInstance.countDocuments({ status: "Available" }).exec(),
-        VehicleType.countDocuments({}).exec(),
-    ]);
+  const [
+    numVehicles,
+    numModels,
+    numVehicleInstances,
+    numAvailableVehicleInstances,
+    numVehicleTypes,
+  ] = await Promise.all([
+    Vehicle.countDocuments({}).exec(),
+    Model.countDocuments({}).exec(),
+    VehicleInstance.countDocuments({}).exec(),
+    VehicleInstance.countDocuments({ status: "Available" }).exec(),
+    VehicleType.countDocuments({}).exec(),
+  ]);
 
-    res.render("index", {
-        title: "Vehicle Inventory Home",
-        vehicle_count: numVehicles,
-        model_count: numModels,
-        vehicle_instance_count: numVehicleInstances,
-        vehicle_instance_available_count: numAvailableVehicleInstances,
-        vehicle_type_count: numVehicleTypes,
-    })
-})
+  res.render("index", {
+    title: "Vehicle Inventory Home",
+    vehicle_count: numVehicles,
+    model_count: numModels,
+    vehicle_instance_count: numVehicleInstances,
+    vehicle_instance_available_count: numAvailableVehicleInstances,
+    vehicle_type_count: numVehicleTypes,
+  });
+});
 
 exports.vehicle_list = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: Vehicle list");
+  const allVehicles = await Vehicle.find({}, "make model")
+    .sort({ price: 1 })
+    .populate("make model")
+    .exec();
+
+  res.render("vehicle_list", {
+    title: "Vehicle List",
+    vehicle_list: allVehicles,
+  });
 });
 
 exports.vehicle_detail = asyncHandler(async (req, res, next) => {

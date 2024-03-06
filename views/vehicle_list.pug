@@ -1,0 +1,12 @@
+extends layout
+
+block content
+    h1= title
+    if vehicle_list.length
+        ul
+            each vehicle in vehicle_list
+                li
+                    | #{vehicle.make} (#{vehicle.model.modelname})
+
+    else
+        p There are no vehicles.
