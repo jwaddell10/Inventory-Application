@@ -32,9 +32,9 @@ exports.index = asyncHandler(async (req, res, next) => {
 });
 
 exports.vehicle_list = asyncHandler(async (req, res, next) => {
-  const allVehicles = await Vehicle.find({}, "make model")
+  const allVehicles = await Vehicle.find({})
     .sort({ price: 1 })
-    .populate("make model")
+    .populate("model")
     .exec();
 
   res.render("vehicle_list", {

@@ -6,7 +6,11 @@ block content
         ul
             each vehicle in vehicle_list
                 li
-                    | #{vehicle.make} (#{vehicle.model.modelname})
+                    strong #{vehicle.make} (#{vehicle.model.modelname})
+                    br
+                    | Number in Stock: #{vehicle.model.number_in_stock}
+                    br
+                    | Price: $#{vehicle.model.price}
 
     else
         p There are no vehicles.
