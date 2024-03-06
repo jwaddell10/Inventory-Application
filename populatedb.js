@@ -9,7 +9,7 @@ console.log(
 );
 
 // Get arguments passed on command line
-const userArgs = process.argv.slice(2);
+// const userArgs = process.argv.slice(2);
 
 const Vehicle = require("./models/vehicle");
 const Model = require("./models/model");
@@ -17,6 +17,7 @@ const VehicleType = require("./models/vehicletype");
 const VehicleInstance = require("./models/vehicleinstance");
 
 const vehicles = [];
+console.log(vehicles, 'this is vehicles')
 const models = [];
 const vehicletypes = [];
 const vehicleinstances = [];
@@ -29,6 +30,14 @@ async function main() {
   console.log("Debug: About to connect");
   await mongoose.connect(mongoDB);
   console.log("Debug: Should be connected?");
+
+  await Promise.all([
+    Vehicle.deleteMany(),
+    Model.deleteMany(),
+    VehicleType.deleteMany(),
+    VehicleInstance.deleteMany(),
+  ])
+  
   await createVehicleType();
   await createModel();
   await createVehicle();
@@ -80,12 +89,12 @@ async function vehicleInstanceCreate(index, vehicle, status, due_back) {
     vehicle: vehicle,
     status: status,
     due_back: due_back,
-  }
+  };
 
-  const vehicleinstance = new VehicleInstance(vehicleinstancedetail)
+  const vehicleinstance = new VehicleInstance(vehicleinstancedetail);
   await vehicleinstance.save();
   vehicleinstances[index] = vehicleinstance;
-  console.log(`Added vehicle instance: ${vehicle}`)
+  console.log(`Added vehicle instance: ${vehicle}`);
 }
 
 async function createVehicleType() {
@@ -156,10 +165,14 @@ async function createModel() {
 }
 
 async function createVehicleInstance() {
-  console.log('adding vehicle instances');
+  console.log("adding vehicle instances");
   await Promise.all([
-    0, vehicles[0],
-  ])
+    vehicleInstanceCreate(0, vehicles[0]),
+    vehicleInstanceCreate(0, vehicles[1], "Maintenance"),
+    vehicleInstanceCreate(0, vehicles[2], "Reserved"),
+    vehicleInstanceCreate(0, vehicles[3], "Rented", ),
+    vehicleInstanceCreate(0, vehicles[4]),
+  ]);
 }
 
 async function createVehicle() {

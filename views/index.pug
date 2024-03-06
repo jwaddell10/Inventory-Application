@@ -3,3 +3,14 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+
+  h1 Dynamic content
+
+  p The dealership has the following record counts:
+
+  ul
+    li #[strong Vehicles:] !{vehicle_count}
+    li #[strong Vehicle Instances:] !{vehicle_instance_count}
+    li #[strong Vehicles Available:] !{vehicle_instance_available_count}
+    li #[strong Models:] !{model_count}
+    li #[strong Vehicle Types:] !{vehicle_type_count}
