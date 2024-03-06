@@ -4,7 +4,15 @@ const asyncHandler = require("express-async-handler");
 //get list of models, get details of models, get number of models in stock, get price of models
 
 exports.model_list = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: List of models");
+  const allModels = await Model.find({})
+    .sort({ price: 1 })
+    .populate()
+    .exec();
+
+  res.render("model_list", {
+    title: "Model List",
+    model_list: allModels,
+  });
 });
 
 exports.model_detail = asyncHandler(async (req, res, next) => {

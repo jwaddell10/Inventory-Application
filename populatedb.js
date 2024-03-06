@@ -71,11 +71,12 @@ async function modelCreate(index, modelname, summary, number_in_stock, price) {
   console.log(`Added model: ${modelname}`);
 }
 
-async function vehicleCreate(index, make, model, vehicle_type) {
+async function vehicleCreate(index, make, model, vehicle_type, price) {
   const vehicledetail = {
     make: make,
     model: model,
     vehicle_type: vehicle_type,
+    price: price,
   };
 
   const vehicle = new Vehicle(vehicledetail);
@@ -178,10 +179,10 @@ async function createVehicleInstance() {
 async function createVehicle() {
   console.log("Adding Vehicles");
   await Promise.all([
-    vehicleCreate(0, "Honda", models[0], vehicletypes[0]),
-    vehicleCreate(1, "Honda", models[1], vehicletypes[0]),
-    vehicleCreate(2, "Honda", models[2], vehicletypes[1]),
-    vehicleCreate(3, "Honda", models[3], vehicletypes[2]),
-    vehicleCreate(4, "Honda", models[4], vehicletypes[2]),
+    vehicleCreate(0, "Honda", models[0], vehicletypes[0], 500),
+    vehicleCreate(1, "Honda", models[1], vehicletypes[0], 1000),
+    vehicleCreate(2, "Honda", models[2], vehicletypes[1], 5000),
+    vehicleCreate(3, "Honda", models[3], vehicletypes[2], 3000),
+    vehicleCreate(4, "Honda", models[4], vehicletypes[2], 4000),
   ]);
 }

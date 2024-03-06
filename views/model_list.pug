@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    h1=title
+    if model_list.length
+        ul
+            each model in model_list
+                li
+                    strong #{model.modelname} 
+                    br
+                    | #{model.summary}
