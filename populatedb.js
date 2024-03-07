@@ -8,9 +8,6 @@ console.log(
   'This script populates some test books, authors, genres and bookinstances to your database. Specified database as argument - e.g.: node populatedb "mongodb+srv://cooluser:coolpassword@cluster0.lz91hw2.mongodb.net/local_library?retryWrites=true&w=majority"'
 );
 
-// Get arguments passed on command line
-// const userArgs = process.argv.slice(2);
-
 const Vehicle = require("./models/vehicle");
 const Model = require("./models/model");
 const VehicleType = require("./models/vehicletype");
@@ -21,8 +18,6 @@ console.log(vehicles, "this is vehicles");
 const models = [];
 const vehicletypes = [];
 const vehicleinstances = [];
-
-// const mongoDB = userArgs[0];
 
 main().catch((err) => console.log(err));
 

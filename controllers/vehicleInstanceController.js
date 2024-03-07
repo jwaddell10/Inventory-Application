@@ -7,9 +7,9 @@ exports.vehicle_instance_list = asyncHandler(async (req, res, next) => {
   });
 
   const allVehicleInstances = await VehicleInstance.find({})
-  .populate("vehicle")
-  .populate("model")
-  .exec();
+    .populate("vehicle")
+    .populate("model")
+    .exec();
 
   res.render("vehicle_instance_list", {
     title: "Vehicle Instances",
