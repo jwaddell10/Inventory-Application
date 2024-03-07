@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    h1=title 
+    if vehicle_type_list.length
+        ul 
+            each vehicle in vehicle_type_list
+                li 
+                    | #{vehicle.type}
+    else
+        p No vehicle types found.

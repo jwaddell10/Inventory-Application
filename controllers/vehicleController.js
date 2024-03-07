@@ -36,7 +36,6 @@ exports.vehicle_list = asyncHandler(async (req, res, next) => {
     .sort({ price: 1 })
     .populate("model")
     .exec();
-
   res.render("vehicle_list", {
     title: "Vehicle List",
     vehicle_list: allVehicles,
