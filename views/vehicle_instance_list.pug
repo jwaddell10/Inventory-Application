@@ -1,0 +1,20 @@
+extends layout 
+
+block content 
+    h1=title 
+    if vehicle_instance_list.length
+        ul 
+            each vehicle in vehicle_instance_list
+                li 
+                    strong Vehicle: 
+                    | #{vehicle.vehicle.make}
+                    | #{vehicle.model.modelname}
+                    br
+                    strong Price: 
+                    | $#{vehicle.vehicle.price}
+                    br
+                    strong Vehicle Status: 
+                    | #{vehicle.status}
+                    br
+                    strong Description: 
+                    | #{vehicle.model.summary}

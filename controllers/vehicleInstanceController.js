@@ -1,8 +1,22 @@
 const VehicleInstance = require("../models/vehicleinstance");
 const asyncHandler = require("express-async-handler");
 
-exports.vehicleinstance_list = asyncHandler(async (req, res, next) => {
-  res.send("NOT IMPLEMENTED: VehicleInstance List");
+exports.vehicle_instance_list = asyncHandler(async (req, res, next) => {
+  const allAvailableVehicles = await VehicleInstance.countDocuments({
+    status: "Available",
+  });
+
+  const allVehicleInstances = await VehicleInstance.find({})
+  .populate("vehicle")
+  .populate("model")
+  .exec();
+
+  res.render("vehicle_instance_list", {
+    title: "Vehicle Instances",
+    vehicle_instance_list: allVehicleInstances,
+    available_vehicles_list: allAvailableVehicles,
+  });
+  console.log(allVehicleInstances, "this is vehicle isntances");
 });
 
 exports.vehicleinstance_detail = asyncHandler(async (req, res, next) => {

@@ -17,7 +17,7 @@ const VehicleType = require("./models/vehicletype");
 const VehicleInstance = require("./models/vehicleinstance");
 
 const vehicles = [];
-console.log(vehicles, 'this is vehicles')
+console.log(vehicles, "this is vehicles");
 const models = [];
 const vehicletypes = [];
 const vehicleinstances = [];
@@ -36,8 +36,8 @@ async function main() {
     Model.deleteMany(),
     VehicleType.deleteMany(),
     VehicleInstance.deleteMany(),
-  ])
-  
+  ]);
+
   await createVehicleType();
   await createModel();
   await createVehicle();
@@ -46,9 +46,6 @@ async function main() {
   mongoose.connection.close();
 }
 
-// We pass the index to the ...Create functions so that, for example,
-// genre[0] will always be the Fantasy genre, regardless of the order
-// in which the elements of promise.all's argument complete.
 async function vehicleTypeCreate(index, type) {
   const vehicletype = new VehicleType({ type: type });
   await vehicletype.save();
@@ -85,9 +82,10 @@ async function vehicleCreate(index, make, model, vehicle_type, price) {
   console.log(`Added vehicle: ${make}`);
 }
 
-async function vehicleInstanceCreate(index, vehicle, status, due_back) {
+async function vehicleInstanceCreate(index, vehicle, model, status, due_back) {
   const vehicleinstancedetail = {
     vehicle: vehicle,
+    model: model,
     status: status,
     due_back: due_back,
   };
@@ -166,13 +164,19 @@ async function createModel() {
 }
 
 async function createVehicleInstance() {
-  console.log("adding vehicle instances");
+  console.log("Adding vehicle instances");
   await Promise.all([
-    vehicleInstanceCreate(0, vehicles[0]),
-    vehicleInstanceCreate(0, vehicles[1], "Maintenance"),
-    vehicleInstanceCreate(0, vehicles[2], "Reserved"),
-    vehicleInstanceCreate(0, vehicles[3], "Rented", ),
-    vehicleInstanceCreate(0, vehicles[4]),
+    vehicleInstanceCreate(0, vehicles[0], models[0]),
+    vehicleInstanceCreate(
+      0,
+      vehicles[1],
+      models[1],
+      "Maintenance",
+      "04/02/2024"
+    ),
+    vehicleInstanceCreate(0, vehicles[2], models[2], "Reserved"),
+    vehicleInstanceCreate(0, vehicles[3], models[3], "Rented"),
+    vehicleInstanceCreate(0, vehicles[4], models[4]),
   ]);
 }
 

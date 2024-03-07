@@ -61,7 +61,7 @@ router.get("/vehicleinstance/:id/update", vehicle_instance_controller.vehicleins
 
 router.get("/vehicleinstance/:id", vehicle_instance_controller.vehicleinstance_detail);
 
-router.get("/vehicleinstances", vehicle_instance_controller.vehicleinstance_list);
+router.get("/vehicleinstances", vehicle_instance_controller.vehicle_instance_list);
 
 // VEHICLE TYPE ROUTES //
 

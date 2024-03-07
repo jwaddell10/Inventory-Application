@@ -3,7 +3,6 @@ const asyncHandler = require("express-async-handler");
 
 exports.vehicletype_list = asyncHandler(async (req, res, next) => {
   const allVehicleTypes = await VehicleType.find({}).exec();
-console.log(allVehicleTypes, 'this is allvehiclesltypes')
   res.render("vehicle_type_list", {
     title: "Vehicle Types",
     vehicle_type_list: allVehicleTypes,

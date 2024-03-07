@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const VehicleInstanceSchema = new Schema({
     vehicle: { type: Schema.Types.ObjectId, ref: "Vehicle", required: true },
+    model: { type: Schema.Types.ObjectId, ref: "Model", required: true}, 
     status: {
         type: String,
         required: true,
