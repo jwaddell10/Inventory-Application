@@ -1,6 +1,6 @@
-extends layout 
+extends layout
 
-block content 
+block content
     h1=title 
     if vehicle_instance_list.length
         ul 
@@ -15,6 +15,7 @@ block content
                     br
                     strong Vehicle Status: 
                     | #{vehicle.status}
-                    br
-                    strong Description: 
-                    | #{vehicle.model.summary}
+                    if vehicle.status !== 'Available'
+                        br
+                        span (Due: #{vehicle.due_back_formatted} )
+
