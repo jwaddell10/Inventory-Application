@@ -1,4 +1,5 @@
 const VehicleType = require("../models/vehicletype");
+const Vehicle = require("../models/vehicle");
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
@@ -11,7 +12,24 @@ exports.vehicletype_list = asyncHandler(async (req, res, next) => {
 });
 
 exports.vehicletype_detail = asyncHandler(async (req, res, next) => {
-	res.send(`NOT IMPLEMENTED: VehicleType Details ${req}`);
+	const vehicleTypeId = req.params.ObjectId;
+	console.log(vehicleTypeId, 'this is veh id')
+	const [vehicleType, vehiclesInVehicleType] = await Promise.all([
+		console.log(req.params.id, 'thisis objectid'),
+		VehicleType.findById(req.params.id).exec(),
+		Vehicle.find({ vehicle_type: req.params.id }, "title summary").exec(),
+	]);
+
+	if (vehicleType === null) {
+		const err = new Error("Vehicle type not found");
+		err.status = 404;
+		return next(err);
+	}
+	res.render("vehicle_type_detail", {
+		title: "Vehicle type detail",
+		vehicleType: vehicleType,
+		vehicleType_vehicles: vehiclesInVehicleType,
+	});
 });
 
 exports.vehicletype_create_get = asyncHandler(async (req, res, next) => {
@@ -25,7 +43,6 @@ exports.vehicletype_create_post = [
 		.escape(),
 
 	asyncHandler(async (req, res, next) => {
-		console.log(req.body.name, "this is req");
 		const errors = validationResult(req);
 
 		const vehicleType = new VehicleType({

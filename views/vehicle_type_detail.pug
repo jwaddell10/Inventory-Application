@@ -1,0 +1,11 @@
+extends layout
+
+block content
+    h1 Vehicle Type: #{vehicleType.type}
+
+    div(style='margin-left:20px;margin-top:20px')
+        h4 Vehicles
+        ul
+            each vehicle in vehicleType_vehicles
+                li= vehicle.title
+
