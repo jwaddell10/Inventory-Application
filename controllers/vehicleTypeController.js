@@ -11,7 +11,7 @@ exports.vehicletype_list = asyncHandler(async (req, res, next) => {
 });
 
 exports.vehicletype_detail = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: VehicleType Details");
+	res.send(`NOT IMPLEMENTED: VehicleType Details ${req}`);
 });
 
 exports.vehicletype_create_get = asyncHandler(async (req, res, next) => {

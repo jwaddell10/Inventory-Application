@@ -12,6 +12,10 @@ exports.model_list = asyncHandler(async (req, res, next) => {
 	});
 });
 
+exports.model_detail = asyncHandler(async (req, res, next) => {
+	res.send(`NOT IMPLEMENTED: Model Detail ${req.body}`);
+});
+
 exports.model_create_get = asyncHandler(async (req, res, next) => {
 	res.send("NOT IMPLEMENTED: Model create GET");
 });
