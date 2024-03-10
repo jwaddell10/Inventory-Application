@@ -12,7 +12,7 @@ exports.vehicletype_list = asyncHandler(async (req, res, next) => {
 });
 
 exports.vehicletype_detail = asyncHandler(async (req, res, next) => {
-	const vehicleTypeId = req.params;
+	const vehicleTypeId = req.params.id;
 	console.log(vehicleTypeId, 'this is veh id')
 	const [vehicleType, vehiclesInVehicleType] = await Promise.all([
 		console.log(req.params.id, 'thisis objectid'),

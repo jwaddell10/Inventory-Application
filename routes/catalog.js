@@ -101,8 +101,6 @@ router.post(
 	vehicle_type_controller.vehicletype_create_post
 );
 
-router.get("/vehicletype/:id", vehicle_type_controller.vehicletype_detail);
-
 router.get(
 	"/vehicletype/:id/delete",
 	vehicle_type_controller.vehicletype_delete_get
