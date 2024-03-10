@@ -30,7 +30,7 @@ exports.vehicletype_create_post = [
 
 		const vehicleType = new VehicleType({
 			type:
-				// change text so it matches enum in VehicleType Schema ("Car, Truck, SUV")
+				// change text so it matches enum in VehicleType Schema ("Car, Truck, Suv")
 				req.body.name.charAt(0).toUpperCase() +
 				req.body.name.slice(1).toLowerCase(),
 		});
