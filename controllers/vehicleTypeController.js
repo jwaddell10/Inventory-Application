@@ -12,23 +12,21 @@ exports.vehicletype_list = asyncHandler(async (req, res, next) => {
 });
 
 exports.vehicletype_detail = asyncHandler(async (req, res, next) => {
-	const vehicleTypeId = req.params.id;
-	console.log(vehicleTypeId, 'this is veh id')
-	const [vehicleType, vehiclesInVehicleType] = await Promise.all([
-		console.log(req.params.id, 'thisis objectid'),
-		VehicleType.findById(req.params.id).exec(),
-		Vehicle.find({ vehicle_type: req.params.id }, "title summary").exec(),
+	const [type, vehiclesInType] = await Promise.all([
+		VehicleType.find({}),
+		// VehicleType.findById(req.params.id).exec(),
+		Vehicle.find({}, "title summary").exec(),
 	]);
-
-	if (vehicleType === null) {
+ 
+	if (type === null) {
 		const err = new Error("Vehicle type not found");
 		err.status = 404;
 		return next(err);
 	}
 	res.render("vehicle_type_detail", {
 		title: "Vehicle type detail",
-		vehicleType: vehicleType,
-		vehicleType_vehicles: vehiclesInVehicleType,
+		type: type,
+		type_vehicles: vehiclesInType,
 	});
 });
 

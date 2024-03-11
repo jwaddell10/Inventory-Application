@@ -1,11 +1,11 @@
 extends layout
 
 block content
-    h1 Vehicle Type: #{vehicleType.type}
+    h1 Vehicle Type Detail
 
     div(style='margin-left:20px;margin-top:20px')
         h4 Vehicles
-        ul
-            each vehicle in vehicleType_vehicles
-                li= vehicle.title
-
+        if type.length 
+            dl
+                each vehicleType in type
+                    dt #{vehicleType.type}

@@ -6,7 +6,7 @@ const VehicleTypeSchema = new Schema({
 		type: String,
 		required: true,
 		enum: ["Car", "Truck", "Suv"],
-		message: "Type must be 'Car', 'Truck', or 'SUV'",
+		message: "Type must be 'Car', 'Truck', or 'Suv'",
 	},
 });
 
