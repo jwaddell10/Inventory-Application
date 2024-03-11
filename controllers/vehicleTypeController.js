@@ -13,11 +13,10 @@ exports.vehicletype_list = asyncHandler(async (req, res, next) => {
 
 exports.vehicletype_detail = asyncHandler(async (req, res, next) => {
 	const [type, vehiclesInType] = await Promise.all([
-		VehicleType.find({}),
-		// VehicleType.findById(req.params.id).exec(),
+		VehicleType.find({ type: { $in: ["Car", "Truck", "Suv"] } }),
 		Vehicle.find({}, "title summary").exec(),
 	]);
- 
+
 	if (type === null) {
 		const err = new Error("Vehicle type not found");
 		err.status = 404;
