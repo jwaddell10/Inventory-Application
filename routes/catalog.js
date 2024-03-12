@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 
 const vehicle_controller = require("../controllers/vehicleController");
-console.log(vehicle_controller.vehicle_list, "this is vehiclecontroller");
 const model_controller = require("../controllers/modelController");
 const vehicle_instance_controller = require("../controllers/vehicleInstanceController");
 const vehicle_type_controller = require("../controllers/vehicleTypeController");
@@ -121,8 +120,8 @@ router.post(
 	vehicle_type_controller.vehicletype_update_post
 );
 
-router.get("/vehicletype/:id", vehicle_type_controller.vehicletype_detail);
+router.get(`/vehicletype/:id`, vehicle_type_controller.vehicle_type_detail);
 
-router.get("/vehicletypes", vehicle_type_controller.vehicletype_list);
+router.get("/vehicletypes", vehicle_type_controller.vehicle_type_list);
 
 module.exports = router;

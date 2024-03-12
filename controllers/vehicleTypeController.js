@@ -1,9 +1,10 @@
 const VehicleType = require("../models/vehicletype");
+console.log(VehicleType, 'this is veh type')
 const Vehicle = require("../models/vehicle");
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
-exports.vehicletype_list = asyncHandler(async (req, res, next) => {
+exports.vehicle_type_list = asyncHandler(async (req, res, next) => {
 	const allVehicleTypes = await VehicleType.find({}).exec();
 	res.render("vehicle_type_list", {
 		title: "Vehicle Types",
@@ -11,23 +12,28 @@ exports.vehicletype_list = asyncHandler(async (req, res, next) => {
 	});
 });
 
-exports.vehicletype_detail = asyncHandler(async (req, res, next) => {
-	const [type, vehiclesInType] = await Promise.all([
-		VehicleType.find({ type: { $in: ["Car", "Truck", "Suv"] } }),
-		Vehicle.find({}, "title summary").exec(),
-	]);
-
-	if (type === null) {
-		const err = new Error("Vehicle type not found");
-		err.status = 404;
-		return next(err);
-	}
-	res.render("vehicle_type_detail", {
-		title: "Vehicle type detail",
-		type: type,
-		type_vehicles: vehiclesInType,
-	});
+exports.vehicle_type_detail = asyncHandler(async (req, res, next) => {
+	const vehicleTypeId = req.params.id;
+	console.log(vehicleTypeId, 'this is veh id')
+    // Fetch details for the specific vehicle type using its ID
+    const [type, vehiclesInType] = await Promise.all([
+        VehicleType.find({ type: req.params.id}),
+        Vehicle.find({ type: req.params.id }, "title summary").exec(),
+    ]);
+    console.log(type, 'this is type')
+    if (!type) {
+        const err = new Error("Vehicle type not found");
+        err.status = 404;
+        return next(err);
+    }
+    
+    res.render("vehicle_type_detail", {
+        title: "Vehicle type detail",
+        type: type,
+        type_vehicles: vehiclesInType,
+    });
 });
+
 
 exports.vehicletype_create_get = asyncHandler(async (req, res, next) => {
 	res.render("vehicle_type_form", { title: "Create Vehicle Type" });
