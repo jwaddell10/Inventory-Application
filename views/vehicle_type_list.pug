@@ -6,7 +6,5 @@ block content
         ul 
             each vehicle in vehicle_type_list
                 li 
-                    a(href="/catalog/vehicletype/id") #{vehicle.type}
-
-    else
+                    a(href=`/catalog/vehicletype/${vehicle.id}`) #{vehicle.type}
         p No vehicle types found.

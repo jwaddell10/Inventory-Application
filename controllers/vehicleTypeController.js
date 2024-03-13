@@ -1,6 +1,6 @@
 const VehicleType = require("../models/vehicletype");
-console.log(VehicleType, 'this is veh type')
 const Vehicle = require("../models/vehicle");
+console.log(Vehicle, "this is veh");
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
@@ -13,26 +13,37 @@ exports.vehicle_type_list = asyncHandler(async (req, res, next) => {
 });
 
 exports.vehicle_type_detail = asyncHandler(async (req, res, next) => {
-	const vehicleTypeId = req.params.id;
-	console.log(vehicleTypeId, 'this is veh id')
-    // Fetch details for the specific vehicle type using its ID
-    const [type, vehiclesInType] = await Promise.all([
-        VehicleType.find({ type: req.params.id}),
-        Vehicle.find({ type: req.params.id }, "title summary").exec(),
-    ]);
-    console.log(type, 'this is type')
-    if (!type) {
-        const err = new Error("Vehicle type not found");
-        err.status = 404;
-        return next(err);
+    try {        
+        // Fetch details for the specific vehicle type using its ID
+        const type = await VehicleType.findById(req.params.id).exec();
+        console.log(type, "Vehicle type details");
+
+        if (!type) {
+            const err = new Error("Vehicle type not found");
+            err.status = 404;
+            throw err;
+        }
+
+        // Find vehicles that belong to the specific vehicle type
+		const vehiclesInType = await Vehicle.find({ vehicle: "Truck" }).exec();
+        console.log(vehiclesInType, "Vehicles in type");
+
+        if (vehiclesInType.length === 0) {
+            const err = new Error("No vehicles with that type");
+            err.status = 404;
+            throw err;
+        }
+        
+        res.render("vehicle_type_detail", {
+            title: "Vehicle type detail",
+            type: type,
+            type_vehicles: vehiclesInType,
+        });
+    } catch (err) {
+        next(err); // Pass error to the error handling middleware
     }
-    
-    res.render("vehicle_type_detail", {
-        title: "Vehicle type detail",
-        type: type,
-        type_vehicles: vehiclesInType,
-    });
 });
+
 
 
 exports.vehicletype_create_get = asyncHandler(async (req, res, next) => {

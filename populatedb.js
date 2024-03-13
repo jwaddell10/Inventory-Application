@@ -96,7 +96,7 @@ async function createVehicleType() {
 	await Promise.all([
 		vehicleTypeCreate(0, "Car"),
 		vehicleTypeCreate(1, "Truck"),
-		vehicleTypeCreate(2, "SUV"),
+		vehicleTypeCreate(2, "Suv"),
 	]);
 }
 

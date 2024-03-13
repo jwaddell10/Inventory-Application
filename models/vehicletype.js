@@ -5,14 +5,16 @@ const VehicleTypeSchema = new Schema({
 	type: {
 		type: String,
 		required: true,
-		enum: ["Car", "Truck", "Suv"],
-		message: "Type must be 'Car', 'Truck', or 'Suv'",
+		enum: {
+			values: ["Car", "Truck", "Suv"],
+			message: "Type must be 'Car', 'Truck', or 'Suv'",
+		},
 	},
 });
 
 VehicleTypeSchema.virtual("url").get(function () {
 	// We don't use an arrow function as we'll need the this object
 	return `/catalog/vehicletype/${this._id}`;
-  });
+});
 
 module.exports = mongoose.model("VehicleType", VehicleTypeSchema);
