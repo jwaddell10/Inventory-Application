@@ -15,17 +15,17 @@ exports.vehicle_type_list = asyncHandler(async (req, res, next) => {
 exports.vehicle_type_detail = asyncHandler(async (req, res, next) => {
     try {        
         // Fetch details for the specific vehicle type using its ID
-        const type = await VehicleType.findById(req.params.id).exec();
-        console.log(type, "Vehicle type details");
+        // const type = VehicleType.findById(req.params.id).exec();
+        // console.log(type, "Vehicle type details");
 
-        if (!type) {
-            const err = new Error("Vehicle type not found");
-            err.status = 404;
-            throw err;
-        }
+        // if (!type) {
+        //     const err = new Error("Vehicle type not found");
+        //     err.status = 404;
+        //     throw err;
+        // }
 
         // Find vehicles that belong to the specific vehicle type
-		const vehiclesInType = await Vehicle.find({ vehicle_type: type }).exec();
+		const vehiclesInType = await Vehicle.find({ vehicle_type: req.params.id }).exec();
         console.log(vehiclesInType, "Vehicles in type");
 
         if (vehiclesInType.length === 0) {
@@ -36,7 +36,7 @@ exports.vehicle_type_detail = asyncHandler(async (req, res, next) => {
         
         res.render("vehicle_type_detail", {
             title: "Vehicle type detail",
-            type: type,
+            // type: type,
             type_vehicles: vehiclesInType,
         });
     } catch (err) {

@@ -8,7 +8,10 @@ block content
         if type_vehicles.length 
             ul
                 each type in type_vehicles
-                    li #{type}
+                    li 
+                        #{type.vehicle_type}
+                        | #{type.model}
+                        | $#{type.price}
         else
             p No vehicles found.
 
