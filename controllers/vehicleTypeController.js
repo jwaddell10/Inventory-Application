@@ -25,7 +25,7 @@ exports.vehicle_type_detail = asyncHandler(async (req, res, next) => {
         }
 
         // Find vehicles that belong to the specific vehicle type
-		const vehiclesInType = await Vehicle.find({ vehicle_type: type.type }).exec();
+		const vehiclesInType = await Vehicle.find({ vehicle_type: type }).exec();
         console.log(vehiclesInType, "Vehicles in type");
 
         if (vehiclesInType.length === 0) {
