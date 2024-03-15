@@ -2,3 +2,15 @@ extends layout
 
 block content
 
+    h1=title
+
+    form(method="POST")
+        div.form-group
+            label(for="model_name") Model Name:
+            input#model_name.form-control(type="text" placeholder="Model name (Civic)"
+            name="model_name" required value=(undefined===model ? '' : model_name) )
+
+    if errors 
+        ul 
+            for error in errors 
+                li!= error.msg
