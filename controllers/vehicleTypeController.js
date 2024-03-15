@@ -17,9 +17,15 @@ exports.vehicle_type_detail = asyncHandler(async (req, res, next) => {
 		const vehiclesInType = await Vehicle.find({
 			vehicle_type: req.params.id,
 		})
-			.select("-__v")
-			.populate("model")
-			.populate("vehicle_type")
+			.select("-vehicle_type.__v")
+			.populate({
+				path: "model",
+				select: "-__v",
+			})
+			.populate({
+				path: "vehicle_type",
+				select: "-__v",
+			})
 			.exec();
 		console.log(vehiclesInType, "Vehicles in type");
 

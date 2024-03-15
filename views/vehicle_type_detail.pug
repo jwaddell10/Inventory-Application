@@ -1,17 +1,21 @@
 extends layout
 
 block content
-    h1= title
-
-    if type
-        h2 Vehicle Type: #{type.type}
-
+    h1= "Available Vehicles"
     if vehicles_in_type.length > 0
-        h2 Vehicles in Type
+        h2 #{type.type}s
         ul
             each vehicle in vehicles_in_type
                 li
-                    #{vehicle.vehicle_type}
+                    strong Vehicle: 
+                    | #{vehicle.make}
+                    | #{vehicle.model.modelname}
+                    br
+                    strong Description: 
+                    | #{vehicle.model.summary}
+                    br
+                    strong Price: 
+                    | $#{vehicle.price}
 
     else
         p No vehicles found.

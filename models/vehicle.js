@@ -13,7 +13,4 @@ const VehicleSchema = new Schema({
 	},
 });
 
-const vehicletype = await VehicleType.
-	find()
-
 module.exports = mongoose.model("Vehicle", VehicleSchema);
