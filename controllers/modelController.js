@@ -17,7 +17,7 @@ exports.model_detail = asyncHandler(async (req, res, next) => {
 });
 
 exports.model_create_get = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: Model create GET");
+	res.render("model_form", { title: "Create Model" });
 });
 
 exports.model_create_post = asyncHandler(async (req, res, next) => {
