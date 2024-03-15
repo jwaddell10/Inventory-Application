@@ -34,7 +34,8 @@ exports.index = asyncHandler(async (req, res, next) => {
 exports.vehicle_list = asyncHandler(async (req, res, next) => {
 	const allVehicles = await Vehicle.find({})
 		.sort({ price: 1 })
-		.populate("model")
+		// .populate("model")
+		// .populate("vehicle_type")
 		.exec();
 	res.render("vehicle_list", {
 		title: "Vehicle List",

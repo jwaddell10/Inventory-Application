@@ -1,18 +1,18 @@
 extends layout
 
 block content
-    h1 Vehicle Type Detail
+    h1= title
 
-    div(style='margin-left:20px;margin-top:20px')
-        h4 Vehicles
-        if type_vehicles.length 
-            ul
-                each type in type_vehicles
-                    li 
-                        #{type.vehicle_type}
-                        | #{type.model}
-                        | $#{type.price}
-        else
-            p No vehicles found.
+    if type
+        h2 Vehicle Type: #{type.type}
 
+    if vehicles_in_type.length > 0
+        h2 Vehicles in Type
+        ul
+            each vehicle in vehicles_in_type
+                li
+                    #{vehicle.vehicle_type}
+
+    else
+        p No vehicles found.
 
