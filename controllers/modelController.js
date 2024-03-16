@@ -22,22 +22,23 @@ exports.model_create_get = asyncHandler(async (req, res, next) => {
 });
 
 exports.model_create_post = [
-	body("model_name", "Must contain at least 1 character")
+	body("modelname", "Must contain at least 1 character")
 		.trim()
 		.isLength({ min: 1 })
 		.escape(),
 	body("summary", "Must be at least 1 character")
 		.trim()
-		.isLength({ min: 1 })
-		.withMessage("Model must have a description")
+		.isLength({ min: 3 })
 		.escape(),
-	body("price", "Must be a number").trim(),
+	body("price", "Must be a number").trim().escape(),
 
 	asyncHandler(async (req, res, next) => {
 		const errors = validationResult(req);
 
 		const model = new Model({
-			model_name: req.body.name,
+			modelname: req.body.modelname,
+			summary: req.body.summary,
+			price: req.body.price,
 		});
 
 		if (!errors.isEmpty()) {
@@ -48,12 +49,23 @@ exports.model_create_post = [
 			});
 			return;
 		} else {
-			console.log(req.body.name, "this is req name");
-			const modelNameExists = await Model.findOne({
-				name: req.body.name,
+			console.log(
+				req.body.modelname,
+				req.body,
+				"this is req name in model"
+			);
+			const modelInfoExists = await Model.findOne({
+				name: req.body.modelname,
+				summary: req.body.summary,
+				price: req.body.price,
 			});
-			await model.save();
-			res.redirect(model.url);
+
+			if (modelInfoExists) {
+				res.redirect(modelInfoExists.url);
+			} else {
+				await model.save();
+				res.redirect(model.url);
+			}
 		}
 	}),
 ];

@@ -82,7 +82,7 @@ exports.vehicletype_create_post = [
 			});
 			return;
 		} else {
-			console.log(req.body.name, 'this is req name')
+			console.log(req, 'this is req name')
 			const vehicleTypeExists = await VehicleType.findOne({
 				type: req.body.name,
 			})
