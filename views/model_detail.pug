@@ -4,7 +4,8 @@ block content
     h1 Available Models
     if model_list.length > 0
         each model in model_list
-            h2 #{model.modelname} <!-- Assuming 'modelname' is the property representing the model's name -->
-            p #{model.summary} <!-- Assuming 'summary' is the property representing the model's summary -->
+            h2 Model Name: #{model.modelname} <!-- Assuming 'modelname' is the property representing the model's name -->
+            p Model summary: #{model.summary}
+            | Price: $#{model.price} <!-- Assuming 'summary' is the property representing the model's summary -->
     else
         p No models found.
