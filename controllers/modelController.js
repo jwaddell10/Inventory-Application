@@ -6,7 +6,7 @@ const asyncHandler = require("express-async-handler");
 
 exports.model_list = asyncHandler(async (req, res, next) => {
 	const allModels = await Model.find({}).sort({ price: 1 }).exec();
-
+	console.log(allModels, 'this is the models')
 	res.render("model_list", {
 		title: "Model List",
 		model_list: allModels,
@@ -14,7 +14,17 @@ exports.model_list = asyncHandler(async (req, res, next) => {
 });
 
 exports.model_detail = asyncHandler(async (req, res, next) => {
-	res.send(`NOT IMPLEMENTED: Model Detail ${req.body}`);
+	try {
+		const findModels = await Model.find({}).exec();
+		console.log(findModels, 'these are the models')
+
+		res.render("model_detail", {
+			title: "Models",
+			model_list: findModels,
+		})
+	} catch(err) {
+		next(err)
+	}
 });
 
 exports.model_create_get = asyncHandler(async (req, res, next) => {
