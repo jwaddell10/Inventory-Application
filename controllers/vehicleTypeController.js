@@ -82,8 +82,9 @@ exports.vehicletype_create_post = [
 			});
 			return;
 		} else {
+			console.log(req.body.name, 'this is req name')
 			const vehicleTypeExists = await VehicleType.findOne({
-				name: req.body.name,
+				type: req.body.name,
 			})
 				.collation({ locale: "en", strength: 3 })
 				.exec();

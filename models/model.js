@@ -8,4 +8,8 @@ const ModelSchema = new Schema({
 	price: { type: Number, required: true },
 });
 
+ModelSchema.virtual("url").get(function () {
+	return `/catalog/model/${this._id}`
+});
+
 module.exports = mongoose.model("Model", ModelSchema);
