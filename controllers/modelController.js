@@ -6,7 +6,7 @@ const asyncHandler = require("express-async-handler");
 
 exports.model_list = asyncHandler(async (req, res, next) => {
 	const allModels = await Model.find({}).sort({ price: 1 }).exec();
-	console.log(allModels, 'this is the models')
+	console.log(allModels, "this is the models");
 	res.render("model_list", {
 		title: "Model List",
 		model_list: allModels,
@@ -16,14 +16,14 @@ exports.model_list = asyncHandler(async (req, res, next) => {
 exports.model_detail = asyncHandler(async (req, res, next) => {
 	try {
 		const findModels = await Model.find({}).exec();
-		console.log(findModels, 'these are the models')
+		console.log(findModels, "these are the models");
 
 		res.render("model_detail", {
 			title: "Models",
 			model_list: findModels,
-		})
-	} catch(err) {
-		next(err)
+		});
+	} catch (err) {
+		next(err);
 	}
 });
 
@@ -81,11 +81,31 @@ exports.model_create_post = [
 ];
 
 exports.model_delete_get = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: Model deletes GET");
+	const [model] = await Promise.all([Model.findById(req.params.id).exec()]);
+
+	if (model === null) {
+		res.redirect("/catalog/models");
+	}
+
+	res.render("model_delete", {
+		title: "Delete Model",
+		model: model,
+	});
 });
 
 exports.model_delete_post = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: Model deletes POST");
+	const [model] = await Promise.all([Model.findById(req.params.id).exec()])
+	
+	if (model.length > 0) {
+		res.render("model_delete", {
+			title: "Delete Model",
+			model: model,
+		});
+		return
+	} else {
+		await Model.findByIdAndDelete(req.body.modelid);
+		res.redirect("/catalog/models")
+	}
 });
 
 exports.model_update_get = asyncHandler(async (req, res, next) => {

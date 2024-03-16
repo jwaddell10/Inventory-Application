@@ -1,0 +1,16 @@
+extends layout 
+
+block content 
+
+    h1 #{title}: #{model.name}
+
+    form(method='POST')
+        div.form-group
+            input#modelid.form-control(type='hidden' name='modelid', value=model._id )
+
+        button.btn.btn-primary(type='submit') Delete
+
+    hr
+    p 
+        a(href=model.url+"/delete") Delete Model
+
