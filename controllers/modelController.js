@@ -73,11 +73,12 @@ exports.model_create_post = [
 				name: req.body.modelname,
 				summary: req.body.summary,
 				price: req.body.price,
-			});
+			}).exec();
 
 			if (modelInfoExists) {
 				res.redirect(modelInfoExists.url);
 			} else {
+				console.log('its saving');
 				await model.save();
 				res.redirect(model.url);
 			}
