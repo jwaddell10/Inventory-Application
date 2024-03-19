@@ -30,8 +30,6 @@ router.get("/vehicles", vehicle_controller.vehicle_list);
 
 // MODEL ROUTES //
 
-router.get(`/model/:id`, model_controller.model_detail);
-
 router.get("/model/create", model_controller.model_create_get);
 
 router.post("/model/create", model_controller.model_create_post);

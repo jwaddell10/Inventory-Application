@@ -16,7 +16,7 @@ exports.model_list = asyncHandler(async (req, res, next) => {
 exports.model_detail = asyncHandler(async (req, res, next) => {
 	try {
 		const findModels = await Model.find({}).exec();
-		console.log(findModels, "these are the models");
+		console.log(findModels, "these are details");
 
 		res.render("model_detail", {
 			title: "Models",
