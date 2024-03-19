@@ -18,5 +18,15 @@ block content
             |  #{item.status}
             br
             strong Due back:
-            |  #{item.due_back}
+            |  #{item.due_back_formatted}
+
+        form(method='POST')
+            div.form-group
+                input#vehicleid.form-control(type='hidden' name='vehicleid' value=vehicle._id)
+
+            button.btn.btn-primary(type='submit') Delete
+
+        hr
+        p 
+            a(href=vehicle.catalogUrl+"/delete") Delete Vehicle Instance
 
