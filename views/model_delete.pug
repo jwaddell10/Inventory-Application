@@ -1,16 +1,30 @@
-extends layout 
+extends layout
 
-block content 
+block content
 
     h1 #{title}: #{model.name}
 
-    form(method='POST')
-        div.form-group
-            input#modelid.form-control(type='hidden' name='modelid', value=model._id )
+    if model_vehicles.length
 
-        button.btn.btn-primary(type='submit') Delete
+        p #[strong Delete the following vehicles before attempting to delete this model.]
+        div(style='margin-left:20px;margin-top:20px')
+            h4 Vehicles
+            dl
+                each vehicle in model_vehicles
+                    dt
+                        a(href=vehicle.url) #{vehicle}
+    else 
+        p Do you really want to delete this model?
 
-    hr
-    p 
-        a(href=model.url+"/delete") Delete Model
+        form(method='POST')
+            div.form-group
+                input#modelid.form-control(type='hidden' name='modelid' value=model._id)
+
+            button.btn.btn-primary(type='submit') Delete
+
+            hr
+            p 
+                a(href=model.url+"/delete") Delete Model
+
+
 

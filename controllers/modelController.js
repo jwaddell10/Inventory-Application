@@ -88,7 +88,10 @@ exports.model_create_post = [
 ];
 
 exports.model_delete_get = asyncHandler(async (req, res, next) => {
-	const [model] = await Promise.all([Model.findById(req.params.id).exec()]);
+	const [model, allVehiclesOfModel] = await Promise.all([
+		Model.findById(req.params.id).exec(),
+		Vehicle.find({ model: req.params.id }, "model").exec(),
+	]);
 
 	if (model === null) {
 		res.redirect("/catalog/models");
@@ -97,16 +100,21 @@ exports.model_delete_get = asyncHandler(async (req, res, next) => {
 	res.render("model_delete", {
 		title: "Delete Model",
 		model: model,
+		model_vehicles: allVehiclesOfModel,
 	});
 });
 
 exports.model_delete_post = asyncHandler(async (req, res, next) => {
-	const [model] = await Promise.all([Model.findById(req.params.id).exec()]);
+	const [model, allVehiclesOfModel] = await Promise.all([
+		Model.findById(req.params.id).exec(),
+		Vehicle.find({ model: req.params.id }, "model summary").exec(),
+	]);
 
-	if (model.length > 0) {
+	if (allVehiclesOfModel.length > 0) {
 		res.render("model_delete", {
 			title: "Delete Model",
 			model: model,
+			model_vehicles: allVehiclesOfModel,
 		});
 		return;
 	} else {
