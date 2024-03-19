@@ -18,4 +18,8 @@ VehicleSchema.virtual("url").get(function () {
 	return `/catalog/vehicles`;
 });
 
+VehicleSchema.virtual("detailUrl").get(function() {
+	return `/catalog/vehicle/${this._id}`;
+});
+
 module.exports = mongoose.model("Vehicle", VehicleSchema);

@@ -12,7 +12,7 @@ block content
             dl
                 each vehicle in model_vehicles
                     dt
-                        a(href=vehicle.url) #{vehicle}
+                        a(href=vehicle.detailUrl) #{vehicle}
     else 
         p Do you really want to delete this model?
 
@@ -24,7 +24,8 @@ block content
 
             hr
             p 
-                a(href=model.url+"/delete") Delete Model
+                a(href=model.catalogUrl+"/delete") Delete Model
+
 
 
 

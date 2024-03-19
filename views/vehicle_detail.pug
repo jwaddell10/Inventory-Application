@@ -1,3 +1,22 @@
 extends layout 
 
 block content
+    h1= title
+
+    if vehicle.length 
+        each item in vehicle
+            strong Make: 
+            |  #{item.vehicle.make}
+            br
+            strong Model:
+            |  #{item.model.modelname}
+            br
+            strong Summary:
+            |  #{item.model.summary}
+            br
+            strong Status:
+            |  #{item.status}
+            br
+            strong Due back:
+            |  #{item.due_back}
+

@@ -44,7 +44,24 @@ exports.vehicle_list = asyncHandler(async (req, res, next) => {
 });
 
 exports.vehicle_detail = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: Vehicle detail");
+	console.log(req.params, "thisi s reqparams veh details");
+
+	const findVehicles = await VehicleInstance.find({
+		vehicle: req.params.id,
+	})
+		.populate({
+			path: "vehicle",
+		})
+		.populate({
+			path: "model",
+		})
+		.exec();
+
+	console.log(findVehicles, "this is findveh");
+	res.render("vehicle_detail", {
+		title: "Vehicle Instance Details",
+		vehicle: findVehicles,
+	})
 });
 
 exports.vehicle_create_get = asyncHandler(async (req, res, next) => {
