@@ -32,7 +32,7 @@ exports.vehicleinstance_create_post = asyncHandler(async (req, res, next) => {
 });
 
 exports.vehicleinstance_delete_get = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: VehicleInstace delete GET");
+	console.log(req.params, 'this is req params in instance')
 });
 
 exports.vehicleinstance_delete_post = asyncHandler(async (req, res, next) => {

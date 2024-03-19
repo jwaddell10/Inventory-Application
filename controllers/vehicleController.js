@@ -61,7 +61,7 @@ exports.vehicle_detail = asyncHandler(async (req, res, next) => {
 	res.render("vehicle_detail", {
 		title: "Vehicle Instance Details",
 		vehicle: findVehicles,
-	})
+	});
 });
 
 exports.vehicle_create_get = asyncHandler(async (req, res, next) => {
@@ -73,7 +73,11 @@ exports.vehicle_create_post = asyncHandler(async (req, res, next) => {
 });
 
 exports.vehicle_delete_get = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: Vehicle delete GET");
+	console.log(req.params, "this is req params in vehicle");
+	const [vehicles] = await Promise.all([
+		Vehicle.findById(req.params.id).exec(),
+	]);
+	console.log(vehicles, "this is veh");
 });
 
 exports.vehicle_delete_post = asyncHandler(async (req, res, next) => {
