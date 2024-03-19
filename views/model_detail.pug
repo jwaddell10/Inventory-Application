@@ -6,7 +6,11 @@ block content
         each car in model_detail
             strong #{car.make} #{car.model.modelname}
             br
-            | #{car.model.summary}
+            strong Summary: 
+            |  #{car.model.summary}
+            br
+            strong Price:
+            |  #{car.model.price}
 
             hr
             p

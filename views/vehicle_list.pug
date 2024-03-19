@@ -6,7 +6,8 @@ block content
         ul
             each vehicle in vehicle_list
                 li
-                    strong #{vehicle.make} #{vehicle.model.modelname}
+                    a(href=`/catalog/model/${vehicle.model._id}`) 
+                        | #{vehicle.make} #{vehicle.model.modelname}
                     br
                     | Number in Stock: #{vehicle.model.number_in_stock}
                     br
@@ -14,3 +15,4 @@ block content
 
     else
         p There are no vehicles.
+

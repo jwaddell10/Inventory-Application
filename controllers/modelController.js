@@ -15,7 +15,6 @@ exports.model_list = asyncHandler(async (req, res, next) => {
 
 exports.model_detail = asyncHandler(async (req, res, next) => {
 	try {
-		console.log(req.params.id, "this is reqparams");
 		const findVehicles = await Vehicle.find({
 			model: req.params.id,
 		})
@@ -23,7 +22,6 @@ exports.model_detail = asyncHandler(async (req, res, next) => {
 				path: "model",
 			})
 			.exec();
-		console.log(findVehicles, "these are details");
 
 		res.render("model_detail", {
 			title: "Model Details",
