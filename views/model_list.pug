@@ -6,6 +6,8 @@ block content
         ul
             each model in model_list
                 li
-                    strong #{model.modelname} 
-                    br
-                    | #{model.summary}
+                    a(href=`/catalog/model/${model._id}`)
+                        strong Model Name: 
+                        | #{model.modelname}
+    else
+        p No models found.

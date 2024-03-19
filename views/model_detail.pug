@@ -2,10 +2,11 @@ extends layout
 
 block content
     h1=title
-    if model_list.length > 0
-        each model in model_list
-            h2 Model Name: #{model.modelname} <!-- Assuming 'modelname' is the property representing the model's name -->
-            p Model summary: #{model.summary}
-            | Price: $#{model.price} <!-- Assuming 'summary' is the property representing the model's summary -->
+    if model_detail.length
+        each car in model_detail
+            strong #{car.make} #{car.model.modelname}
+            br
+            | #{car.model.summary}
+
     else
         p No models found.

@@ -13,7 +13,7 @@ exports.vehicle_type_list = asyncHandler(async (req, res, next) => {
 });
 
 exports.vehicle_type_detail = asyncHandler(async (req, res, next) => {
-	console.log(req, 'thisis req vehicletype')
+	console.log(req.params, 'thisis req vehicletype')
 	try {
 		const vehiclesInType = await Vehicle.find({
 			vehicle_type: req.params.id,

@@ -1,12 +1,12 @@
 const { body, validationResult } = require("express-validator");
 const Model = require("../models/model");
+const Vehicle = require("../models/vehicle");
 const asyncHandler = require("express-async-handler");
 
 //get list of models, get details of models, get number of models in stock, get price of models
 
 exports.model_list = asyncHandler(async (req, res, next) => {
 	const allModels = await Model.find({}).sort({ price: 1 }).exec();
-	console.log(allModels, "this is the models");
 	res.render("model_list", {
 		title: "Model List",
 		model_list: allModels,
@@ -15,12 +15,19 @@ exports.model_list = asyncHandler(async (req, res, next) => {
 
 exports.model_detail = asyncHandler(async (req, res, next) => {
 	try {
-		const findModels = await Model.find({}).exec();
-		console.log(findModels, "these are details");
+		console.log(req.params.id, "this is reqparams");
+		const findVehicles = await Vehicle.find({
+			model: req.params.id,
+		})
+			.populate({
+				path: "model",
+			})
+			.exec();
+		console.log(findVehicles, "these are details");
 
 		res.render("model_detail", {
-			title: "Models",
-			model_list: findModels,
+			title: "Model Details",
+			model_detail: findVehicles,
 		});
 	} catch (err) {
 		next(err);
@@ -94,17 +101,17 @@ exports.model_delete_get = asyncHandler(async (req, res, next) => {
 });
 
 exports.model_delete_post = asyncHandler(async (req, res, next) => {
-	const [model] = await Promise.all([Model.findById(req.params.id).exec()])
-	
+	const [model] = await Promise.all([Model.findById(req.params.id).exec()]);
+
 	if (model.length > 0) {
 		res.render("model_delete", {
 			title: "Delete Model",
 			model: model,
 		});
-		return
+		return;
 	} else {
 		await Model.findByIdAndDelete(req.body.modelid);
-		res.redirect("/catalog/models")
+		res.redirect("/catalog/models");
 	}
 });
 
