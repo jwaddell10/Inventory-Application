@@ -28,6 +28,12 @@ block content
 
         hr
         p 
-        if vehicle && vehicle.catalogUrl
-            a(href=vehicle.catalogUrl+"/delete") Delete Vehicle Instance
+            if vehicle && vehicle.catalogUrl
+                a(href=vehicle.catalogUrl+"/delete") Delete Vehicle Instance
+
+    hr
+    p
+        a(href=vehicle.url+'/delete') Delete Vehicle
+    p
+        a(href=vehicle.url+'/update') Update Vehicle
 

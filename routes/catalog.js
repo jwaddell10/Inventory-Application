@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-
 const vehicle_controller = require("../controllers/vehicleController");
 const model_controller = require("../controllers/modelController");
 const vehicle_instance_controller = require("../controllers/vehicleInstanceController");

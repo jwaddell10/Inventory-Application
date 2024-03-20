@@ -3,6 +3,7 @@ const Model = require("../models/model");
 const VehicleInstance = require("../models/vehicleinstance");
 const VehicleType = require("../models/vehicletype");
 const asyncHandler = require("express-async-handler");
+const { body, validationResult } = require("express-validator");
 
 //count all vehicles
 
@@ -85,9 +86,95 @@ exports.vehicle_delete_post = asyncHandler(async (req, res, next) => {
 });
 
 exports.vehicle_update_get = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: Vehicle update GET");
+	console.log(req.params, 'thisis req')
+
+	const [vehicle, allModels, allVehicleTypes] = await Promise.all([
+		Vehicle.findById(req.params.id).populate("model").exec(),
+		Model.find().sort({ price: 1 }).exec(),
+		VehicleType.find().sort({ name: 1 }).exec(),
+	]);
+
+	if (vehicle === null) {
+		const err = new Error("Vehicle not found");
+		err.status = 404;
+		return next(err);
+	}
+
+	allVehicleTypes.forEach((type) => {
+		if (vehicle.type.includes(type._id)) type.checked = "true";
+	});
+
+	res.render("vehicle_form", {
+		title: "Update Vehicle",
+		models: allModels,
+		vehicletypes: allVehicleTypes,
+		vehicle: vehicle,
+	});
 });
 
-exports.vehicle_update_post = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: Vehicle update POST");
-});
+exports.vehicle_update_post = [
+	(req, res, next) => {
+		console.log(req, 'thisis req')
+		if (!Array.isArray(req.body.vehicletype)) {
+			req.body.vehicletype =
+				typeof req.body.genre === "undefined"
+					? []
+					: [req.body.vehicletype];
+		}
+		next();
+	},
+
+	body("vehicle", "Vehicle must not be empty")
+		.trim()
+		.isLength({ min: 1 })
+		.escape(),
+	body("model", "Model must not be empty")
+		.trim()
+		.isLength({ min: 1 })
+		.escape(),
+	body("vehicle_type", "Vehicle Type must not be empty")
+		.trim()
+		.isLength({ min: 1 })
+		.escape(),
+
+	asyncHandler(async (req, res, next) => {
+		const errors = validationResult(req);
+
+		const vehicle = new Vehicle({
+			make: req.body.make,
+			model: req.body.model,
+			number_in_stock: req.body.number_in_stock,
+			price: req.body.price,
+			vehicle_type: req.body.vehicletype,
+		});
+		console.log(vehicle, "this is vehicle");
+
+		if (!errors.isEmpty()) {
+			const [allModels, allVehicleTypes] = await Promise.all([
+				Model.find().sort({ price: 1 }).exec(),
+				VehicleType.find().sort({ name: 1 }).exec(),
+			]);
+
+			for (const type of allVehicleTypes) {
+				if (vehicle.type.indexOf(type._id) > -1) {
+					type.checked = "true";
+				}
+			}
+			res.render("vehicle_form", {
+				title: "Update Vehicle",
+				model: allModels,
+				type: allVehicleTypes,
+				vehicle: vehicle,
+				errors: errors.array(),
+			});
+			return;
+		} else {
+			const updatedVehicle = await Vehicle.findByIdAndUpdate(
+				req.params.id,
+				vehicle,
+				{}
+			);
+			res.redirect(updatedVehicle.url);
+		}
+	}),
+];
