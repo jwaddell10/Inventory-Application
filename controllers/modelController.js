@@ -73,9 +73,8 @@ exports.model_create_post = [
 			if (modelInfoExists) {
 				res.redirect(modelInfoExists.url);
 			} else {
-				console.log(`${this._id}`, "its saving");
 				await model.save();
-				res.redirect(`/catalog/model/${this._id}`);
+				res.redirect(model.url);
 			}
 		}
 	}),
