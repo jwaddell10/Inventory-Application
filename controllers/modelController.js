@@ -15,17 +15,11 @@ exports.model_list = asyncHandler(async (req, res, next) => {
 
 exports.model_detail = asyncHandler(async (req, res, next) => {
 	try {
-		const findVehicles = await Vehicle.find({
-			model: req.params.id,
-		})
-			.populate({
-				path: "model",
-			})
-			.exec();
-
+		const findModels = await Model.findById(req.params.id).exec();
+		console.log(findModels, 'this is find models')
 		res.render("model_detail", {
 			title: "Model Details",
-			model_detail: findVehicles,
+			model_detail: findModels,
 		});
 	} catch (err) {
 		next(err);
@@ -79,7 +73,7 @@ exports.model_create_post = [
 			if (modelInfoExists) {
 				res.redirect(modelInfoExists.url);
 			} else {
-				console.log(`${this._id}`, 'its saving');
+				console.log(`${this._id}`, "its saving");
 				await model.save();
 				res.redirect(`/catalog/model/${this._id}`);
 			}

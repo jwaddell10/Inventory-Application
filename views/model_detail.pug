@@ -1,20 +1,17 @@
 extends layout
 
 block content
-    h1=title
-    if model_detail.length
-        each car in model_detail
-            strong #{car.make} #{car.model.modelname}
-            br
-            strong Summary: 
-            |  #{car.model.summary}
-            br
-            strong Price:
-            |  #{car.model.price}
-
-            hr
-            p
-                a(href=car.model.url+'/delete') Delete model
-
+    h1= title
+    if model_detail
+        strong Make: #{model_detail.make}
+        br
+        strong Model: #{model_detail.modelname}
+        br
+        strong Summary: #{model_detail.summary}
+        br
+        strong Price: #{model_detail.price}
+        hr
+        p
+            a(href=model_detail.url+'/delete') Delete model
     else
-        p No models found.
+        p No model found.
