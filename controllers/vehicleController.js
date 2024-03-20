@@ -66,12 +66,71 @@ exports.vehicle_detail = asyncHandler(async (req, res, next) => {
 });
 
 exports.vehicle_create_get = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: Vehicle create GET");
+	res.render("vehicle_form", {
+		title: "Create Vehicle Form",
+	});
 });
 
-exports.vehicle_create_post = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: Vehicle create POST");
-});
+exports.vehicle_create_post = [
+	body("make", "Must contain at least 1 character")
+		.trim()
+		.isLength({ min: 1 })
+		.escape(),
+	body("model", "Must contain at least 1 character")
+		.trim()
+		.isLength({ min: 1 })
+		.escape(),
+	body("price", "Must contain at least 1 number").trim().isNumeric().escape(),
+	body("vehicle_type", "Must contain at least 1 character")
+		.trim()
+		.isLength({ min: 1 })
+		.escape(),
+
+	asyncHandler(async (req, res, next) => {
+		const errors = validationResult(req);
+
+		if (!errors.isEmpty()) {
+			// Handle validation errors
+			res.render("vehicle_form", {
+				title: "Create Vehicle",
+				errors: errors.array(),
+				vehicle: req.body,
+			});
+			return;
+		}
+
+		try {
+			// Find the model ObjectId based on the model name
+			const model = await Model.findOne({
+				modelname: req.body.model,
+			}).exec();
+			const vehicletype = await VehicleType.findOne({
+				type: req.body.vehicle_type,
+			}).exec();
+			if (!model || !vehicletype) {
+				// Handle case where model name is not found
+				throw new Error("Model/VehicleType not found");
+			}
+
+			// Create a new vehicle with the found model ObjectId
+			const vehicle = new Vehicle({
+				make: req.body.make,
+				model: model._id, // Use the ObjectId of the model
+				price: req.body.price,
+				vehicle_type: vehicletype._id,
+			});
+
+			// Save the new vehicle to the database
+			await vehicle.save();
+
+			// Redirect to the newly created vehicle's details page
+			res.redirect(vehicle.url);
+		} catch (err) {
+			// Handle any errors that occur during database operations
+			next(err);
+		}
+	}),
+];
 
 exports.vehicle_delete_get = asyncHandler(async (req, res, next) => {
 	console.log(req.params, "this is req params in vehicle");
@@ -79,6 +138,10 @@ exports.vehicle_delete_get = asyncHandler(async (req, res, next) => {
 		Vehicle.findById(req.params.id).exec(),
 	]);
 	console.log(vehicles, "this is veh");
+
+	res.render("Delete Vehicle", {
+		title: "Delete Vehicle",
+	});
 });
 
 exports.vehicle_delete_post = asyncHandler(async (req, res, next) => {
@@ -86,10 +149,10 @@ exports.vehicle_delete_post = asyncHandler(async (req, res, next) => {
 });
 
 exports.vehicle_update_get = asyncHandler(async (req, res, next) => {
-	console.log(req.params, 'thisis req')
+	console.log(req.params, "thisis req");
 
 	const [vehicle, allModels, allVehicleTypes] = await Promise.all([
-		Vehicle.findById(req.params.id).populate("model").exec(),
+		Vehicle.findById(req.params.id).populate("model vehicle_type").exec(),
 		Model.find().sort({ price: 1 }).exec(),
 		VehicleType.find().sort({ name: 1 }).exec(),
 	]);
@@ -114,7 +177,7 @@ exports.vehicle_update_get = asyncHandler(async (req, res, next) => {
 
 exports.vehicle_update_post = [
 	(req, res, next) => {
-		console.log(req, 'thisis req')
+		console.log(req, "thisis req");
 		if (!Array.isArray(req.body.vehicletype)) {
 			req.body.vehicletype =
 				typeof req.body.genre === "undefined"

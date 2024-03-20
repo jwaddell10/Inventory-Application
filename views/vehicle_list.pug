@@ -6,7 +6,7 @@ block content
         ul
             each vehicle in vehicle_list
                 li
-                    a(href=`/catalog/model/${vehicle.model._id}`) 
+                    a(href=`/catalog/vehicle/${vehicle._id}`) 
                         | #{vehicle.make} #{vehicle.model.modelname}
                     br
                     | Number in Stock: #{vehicle.model.number_in_stock}
