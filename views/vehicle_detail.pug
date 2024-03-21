@@ -1,39 +1,27 @@
-extends layout 
+extends layout
 
 block content
     h1= title
 
-    if vehicle.length 
-        each item in vehicle
-            strong Make: 
-            |  #{item.vehicle.make}
-            br
-            strong Model:
-            |  #{item.model.modelname}
-            br
-            strong Summary:
-            |  #{item.model.summary}
-            br
-            strong Status:
-            |  #{item.status}
-            br
-            strong Due back:
-            |  #{item.due_back_formatted}
+    if vehicle 
+        strong Make and Model:
+        |  #{vehicle.make} #{vehicle.model.modelname}
+        br
+        strong Summary: 
+        |  #{vehicle.model.summary}
+        br
+        strong Number in Stock:
+        |  #{vehicle.model.number_in_stock}
+        br
+        strong Price: 
+        |  $#{vehicle.model.price}
 
         form(method='POST')
             div.form-group
                 input#vehicleid.form-control(type='hidden' name='vehicleid' value=vehicle._id)
 
-            button.btn.btn-primary(type='submit') Delete
-
-        hr
-        p 
-            if vehicle && vehicle.catalogUrl
-                a(href=vehicle.catalogUrl+"/delete") Delete Vehicle Instance
-
     hr
     p
-        a(href=vehicle.url+'/delete') Delete Vehicle
+        a(href=vehicle.detailUrl+'/delete') Delete Vehicle
     p
-        a(href=vehicle.url+'/update') Update Vehicle
-
+        a(href=vehicle.detailUrl+'/update') Update Vehicle
