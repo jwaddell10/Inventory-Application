@@ -131,19 +131,30 @@ exports.vehicle_create_post = [
 ];
 
 exports.vehicle_delete_get = asyncHandler(async (req, res, next) => {
-	console.log(req.params, "this is req params in vehicle");
 	const [vehicles] = await Promise.all([
-		Vehicle.findById(req.params.id).exec(),
+		Vehicle.findById(req.params.id)
+		.populate("model")
+		.populate("vehicle_type")
+		.exec(),
 	]);
-	console.log(vehicles, "this is veh");
-
-	res.render("Delete Vehicle", {
+	res.render("vehicle_delete", {
 		title: "Delete Vehicle",
+		vehicle: vehicles,
 	});
 });
 
 exports.vehicle_delete_post = asyncHandler(async (req, res, next) => {
-	res.send("NOT IMPLEMENTED: Vehicle delete POST");
+	const [vehicles] = await Promise.all([
+		Vehicle.findById(req.params.id)
+		.populate("model")
+		.populate("vehicle_type")
+		.exec(),
+	]);
+
+	if (vehicles) {
+		await Vehicle.findByIdAndDelete(req.params.id).exec(),
+		res.redirect("/catalog/vehicles")
+	}
 });
 
 exports.vehicle_update_get = asyncHandler(async (req, res, next) => {
