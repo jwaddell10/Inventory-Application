@@ -6,13 +6,21 @@ block content
         ul
             each vehicle in vehicle_list
                 li
-                    a(href=`/catalog/vehicle/${vehicle._id}`) 
-                        | #{vehicle.make} #{vehicle.model.modelname}
+                    strong Make and Model:
+                    | #{vehicle.make} #{vehicle.model ? vehicle.model.modelname : ''}
                     br
-                    | Number in Stock: #{vehicle.model.number_in_stock}
+                    strong Summary:
+                    | #{vehicle.model && vehicle.model.summary ? vehicle.model.summary : ''}
                     br
-                    | Price: $#{vehicle.model.price}
-
+                    strong Number in Stock:
+                    | #{vehicle.number_in_stock}
+                    br
+                    strong Price:
+                    | $#{vehicle.price}
+                    br
+                    a(href=`/catalog/vehicle/${vehicle._id}`) View Details
     else
         p There are no vehicles.
+
+
 
