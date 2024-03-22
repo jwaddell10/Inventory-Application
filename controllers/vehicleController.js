@@ -111,10 +111,7 @@ exports.vehicle_create_post = [
 
 			if (!model) {
 				model = new Model({
-					modelname: req.body.model,
-					summary: req.body.summary,
-					number_in_stock: req.body.number_in_stock,
-					price: req.body.price,
+					model: req.body.model
 				});
 			}
 
