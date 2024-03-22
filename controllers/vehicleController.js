@@ -45,8 +45,8 @@ exports.vehicle_list = asyncHandler(async (req, res, next) => {
 });
 
 exports.vehicle_detail = asyncHandler(async (req, res, next) => {
-	console.log(req.params, "thisi s reqparams veh details");
-
+	//data isnt displaying properly on view for some reason
+	console.log(req.params, 'this is req params veh detail')
 	const findVehicles = await Vehicle.findById(req.params.id)
 		.populate({
 			path: "model",
@@ -78,6 +78,14 @@ exports.vehicle_create_post = [
 		.trim()
 		.isLength({ min: 1 })
 		.escape(),
+	body("summary", "Must contain at least 1 character")
+		.trim()
+		.isLength({ min: 1 })
+		.escape(),
+	body("number_in_stock", "Must contain at least 1 number")
+		.trim()
+		.isNumeric()
+		.escape(),
 	body("price", "Must contain at least 1 number").trim().isNumeric().escape(),
 	body("vehicle_type", "Must contain at least 1 character")
 		.trim()
@@ -88,7 +96,6 @@ exports.vehicle_create_post = [
 		const errors = validationResult(req);
 
 		if (!errors.isEmpty()) {
-			// Handle validation errors
 			res.render("vehicle_form", {
 				title: "Create Vehicle",
 				errors: errors.array(),
@@ -98,26 +105,40 @@ exports.vehicle_create_post = [
 		}
 
 		try {
-			// Find the model ObjectId based on the model name
-			const model = await Model.findOne({
+			let model = await Model.findOne({
 				modelname: req.body.model,
 			}).exec();
-			const vehicletype = await VehicleType.findOne({
-				type: req.body.vehicle_type,
-			}).exec();
-			if (!model || !vehicletype) {
-				// Handle case where model name is not found
-				throw new Error("Model/VehicleType not found");
+
+			if (!model) {
+				model = new Model({
+					modelname: req.body.model,
+					summary: req.body.summary,
+					number_in_stock: req.body.number_in_stock,
+					price: req.body.price,
+				});
 			}
 
-			// Create a new vehicle with the found model ObjectId
+			// Find or create the vehicle type
+			let vehicleType = await VehicleType.findOne({
+				type: req.body.vehicle_type,
+			}).exec();
+
+			if (!vehicleType) {
+				vehicleType = new VehicleType({
+					type: req.body.vehicle_type,
+				});
+			}
+			console.log(req.body, "this is req.body in create post");
+			// Create a new vehicle
 			const vehicle = new Vehicle({
 				make: req.body.make,
-				model: model._id, // Use the ObjectId of the model
+				model: model,
+				summary: req.body.summary,
+				number_in_stock: req.body.number_in_stock,
 				price: req.body.price,
-				vehicle_type: vehicletype._id,
+				vehicle_type: vehicleType,
 			});
-
+			console.log(vehicle, "this is vehicle in create post");
 			// Save the new vehicle to the database
 			await vehicle.save();
 
@@ -133,9 +154,9 @@ exports.vehicle_create_post = [
 exports.vehicle_delete_get = asyncHandler(async (req, res, next) => {
 	const [vehicles] = await Promise.all([
 		Vehicle.findById(req.params.id)
-		.populate("model")
-		.populate("vehicle_type")
-		.exec(),
+			.populate("model")
+			.populate("vehicle_type")
+			.exec(),
 	]);
 	res.render("vehicle_delete", {
 		title: "Delete Vehicle",
@@ -146,14 +167,14 @@ exports.vehicle_delete_get = asyncHandler(async (req, res, next) => {
 exports.vehicle_delete_post = asyncHandler(async (req, res, next) => {
 	const [vehicles] = await Promise.all([
 		Vehicle.findById(req.params.id)
-		.populate("model")
-		.populate("vehicle_type")
-		.exec(),
+			.populate("model")
+			.populate("vehicle_type")
+			.exec(),
 	]);
 
 	if (vehicles) {
 		await Vehicle.findByIdAndDelete(req.params.id).exec(),
-		res.redirect("/catalog/vehicles")
+			res.redirect("/catalog/vehicles");
 	}
 });
 
