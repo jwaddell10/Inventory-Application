@@ -12,6 +12,12 @@ block content
             label(for="model") Model: 
             input#model.form-control(type="text" placeholder="Model name (Civic, Accord, Model Y)"
             name="model" required value=(undefined===model ? '' : model))
+            label(for="summary") Summary: 
+            input#summary.form-control(type="text" placeholder="Summary, tell us about the car name"
+            name="summary" required value=(undefined===summary ? '' : summary))
+            label(for="number_in_stock") Number In Stock:
+            input#number_in_stock.form-control(type="number" placeholder="How many are in stock? 1, 2, 3...)"
+            name="number_in_stock" required value=(undefined===number_in_stock ? '' : number_in_stock))
             label(for="price") Price: 
             input#price.form-control(type="number" placeholder="What's the price?"
             name="price" required value=(undefined===price ? '' : price))
