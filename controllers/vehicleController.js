@@ -88,7 +88,6 @@ exports.vehicle_create_post = [
 		const errors = validationResult(req);
 
 		if (!errors.isEmpty()) {
-			// Handle validation errors
 			res.render("vehicle_form", {
 				title: "Create Vehicle",
 				errors: errors.array(),
@@ -98,7 +97,6 @@ exports.vehicle_create_post = [
 		}
 
 		try {
-			// Find the model ObjectId based on the model name
 			const model = await Model.findOne({
 				modelname: req.body.model,
 			}).exec();
@@ -106,22 +104,18 @@ exports.vehicle_create_post = [
 				type: req.body.vehicle_type,
 			}).exec();
 			if (!model || !vehicletype) {
-				// Handle case where model name is not found
 				throw new Error("Model/VehicleType not found");
 			}
 
-			// Create a new vehicle with the found model ObjectId
 			const vehicle = new Vehicle({
 				make: req.body.make,
-				model: model._id, // Use the ObjectId of the model
+				model: model._id,
 				price: req.body.price,
 				vehicle_type: vehicletype._id,
 			});
 
-			// Save the new vehicle to the database
 			await vehicle.save();
 
-			// Redirect to the newly created vehicle's details page
 			res.redirect(vehicle.url);
 		} catch (err) {
 			// Handle any errors that occur during database operations
@@ -208,7 +202,6 @@ exports.vehicle_update_post = [
 	asyncHandler(async (req, res, next) => {
 		const errors = validationResult(req);
 
-		// Async handler function
 		const vehicle = new Vehicle({
 			make: req.body.make,
 			model: req.body.model,
