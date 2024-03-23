@@ -46,7 +46,7 @@ exports.vehicle_list = asyncHandler(async (req, res, next) => {
 
 exports.vehicle_detail = asyncHandler(async (req, res, next) => {
 	//data isnt displaying properly on view for some reason
-	console.log(req.params, 'this is req params veh detail')
+	console.log(req.params, "this is req params veh detail");
 	const findVehicles = await Vehicle.findById(req.params.id)
 		.populate({
 			path: "model",
@@ -94,56 +94,36 @@ exports.vehicle_create_post = [
 
 	asyncHandler(async (req, res, next) => {
 		const errors = validationResult(req);
+		console.log("is this running");
+		console.log(req.body, "thisis reqbody");
+		const vehicle = new Vehicle({
+			make: req.body.make,
+			model: req.body.model,
+			summary: req.body.summary,
+			number_in_stock: req.body.number_in_stock,
+			price: req.body.price,
+			vehicle_type: req.body.vehicle_type,
+		});
+		console.log(vehicle, "this is vehicle to save");
 
 		if (!errors.isEmpty()) {
+			const [allModels, allVehicleTypes] = await Promise.all([
+				Model.find().sort({ modelname: 1 }).exec(),
+				VehicleType.find().sort({ type: 1 }).exec(),
+			]);
+
 			res.render("vehicle_form", {
 				title: "Create Vehicle",
+				models: allModels,
+				vehicle_types: allVehicleTypes,
+				vehicle: vehicle,
 				errors: errors.array(),
-				vehicle: req.body,
 			});
 			return;
-		}
-
-		try {
-			let model = await Model.findOne({
-				modelname: req.body.model,
-			}).exec();
-
-			if (!model) {
-				model = new Model({
-					model: req.body.model
-				});
-			}
-
-			// Find or create the vehicle type
-			let vehicleType = await VehicleType.findOne({
-				type: req.body.vehicle_type,
-			}).exec();
-
-			if (!vehicleType) {
-				vehicleType = new VehicleType({
-					type: req.body.vehicle_type,
-				});
-			}
-			console.log(req.body, "this is req.body in create post");
-			// Create a new vehicle
-			const vehicle = new Vehicle({
-				make: req.body.make,
-				model: model,
-				summary: req.body.summary,
-				number_in_stock: req.body.number_in_stock,
-				price: req.body.price,
-				vehicle_type: vehicleType,
-			});
-			console.log(vehicle, "this is vehicle in create post");
-			// Save the new vehicle to the database
+		} else {
 			await vehicle.save();
-
-			// Redirect to the newly created vehicle's details page
+			console.log("its saved");
 			res.redirect(vehicle.url);
-		} catch (err) {
-			// Handle any errors that occur during database operations
-			next(err);
 		}
 	}),
 ];
