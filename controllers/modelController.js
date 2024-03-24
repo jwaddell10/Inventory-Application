@@ -27,8 +27,10 @@ exports.model_detail = asyncHandler(async (req, res, next) => {
 });
 
 exports.model_create_get = asyncHandler(async (req, res, next) => {
-	res.render("model_form", { title: "Create Model" });
+    const allModels = await Model.find().sort({ name: 1 }).exec();
+    res.render("model_form", { title: "Create Model", models: allModels });
 });
+
 
 exports.model_create_post = [
 	body("modelname", "Must contain at least 1 character")
