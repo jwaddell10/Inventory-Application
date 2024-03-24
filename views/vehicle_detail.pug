@@ -5,16 +5,16 @@ block content
 
     if vehicle 
         strong Make and Model:
-        |  #{vehicle.make} #{vehicle.model.modelname}
+        | #{vehicle.make} #{vehicle.model ? vehicle.model.modelname : ''}
         br
-        strong Summary: 
-        |  #{vehicle.model.summary}
+        strong Summary:
+        | #{vehicle.model ? vehicle.model.summary : ''}
         br
         strong Number in Stock:
-        |  #{vehicle.model.number_in_stock}
+        | #{vehicle.model ? vehicle.model.number_in_stock : ''}
         br
-        strong Price: 
-        |  $#{vehicle.model.price}
+        strong Price:
+        | $#{vehicle.model ? vehicle.model.price : ''}
 
         form(method='POST')
             div.form-group

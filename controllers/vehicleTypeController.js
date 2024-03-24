@@ -87,7 +87,7 @@ exports.vehicletype_create_post = [
 			const vehicleTypeExists = await VehicleType.findOne({
 				type: req.body.name,
 			})
-				.collation({ locale: "en", strength: 3 })
+				.collation({ locale: "en", strength: 2 })
 				.exec();
 			if (vehicleTypeExists) {
 				res.redirect(vehicleTypeExists.url);

@@ -16,7 +16,7 @@ exports.model_list = asyncHandler(async (req, res, next) => {
 exports.model_detail = asyncHandler(async (req, res, next) => {
 	try {
 		const findModels = await Model.findById(req.params.id).exec();
-		console.log(findModels, 'this is find models')
+		console.log(findModels, "this is find models");
 		res.render("model_detail", {
 			title: "Model Details",
 			model_detail: findModels,
@@ -34,12 +34,14 @@ exports.model_create_post = [
 	body("modelname", "Must contain at least 1 character")
 		.trim()
 		.isLength({ min: 1 })
+		.isAlpha()
 		.escape(),
 	body("summary", "Must be at least 1 character")
 		.trim()
 		.isLength({ min: 3 })
+		.isAlpha()
 		.escape(),
-	body("price", "Must be a number").trim().escape(),
+	body("price", "Must be a number").trim().isNumeric().escape(),
 
 	asyncHandler(async (req, res, next) => {
 		const errors = validationResult(req);
@@ -68,7 +70,9 @@ exports.model_create_post = [
 				name: req.body.modelname,
 				summary: req.body.summary,
 				price: req.body.price,
-			}).exec();
+			})
+				.collation({ locale: "en", strength: 2 })
+				.exec();
 
 			if (modelInfoExists) {
 				res.redirect(modelInfoExists.url);

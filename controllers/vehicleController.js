@@ -3,6 +3,7 @@ const Model = require("../models/model");
 const VehicleInstance = require("../models/vehicleinstance");
 const VehicleType = require("../models/vehicletype");
 const asyncHandler = require("express-async-handler");
+const mongoose = require("mongoose");
 const { body, validationResult } = require("express-validator");
 
 //count all vehicles
@@ -64,8 +65,15 @@ exports.vehicle_detail = asyncHandler(async (req, res, next) => {
 });
 
 exports.vehicle_create_get = asyncHandler(async (req, res, next) => {
+	const [allModels, allVehicleTypes] = await Promise.all([
+		Model.find().sort({ name: 1 }).exec(),
+		VehicleType.find().sort({ name: 1 }).exec(),
+	]);
+
 	res.render("vehicle_form", {
 		title: "Create Vehicle Form",
+		models: allModels,
+		vehicle_types: allVehicleTypes,
 	});
 });
 
@@ -94,8 +102,9 @@ exports.vehicle_create_post = [
 
 	asyncHandler(async (req, res, next) => {
 		const errors = validationResult(req);
-		console.log("is this running");
-		console.log(req.body, "thisis reqbody");
+		console.log(req, "this is req");
+		console.log(req.body, 'this is req.body')
+		console.log(req.params, "thisis req params");
 		const vehicle = new Vehicle({
 			make: req.body.make,
 			model: req.body.model,
@@ -122,7 +131,7 @@ exports.vehicle_create_post = [
 			return;
 		} else {
 			await vehicle.save();
-			console.log("its saved");
+			console.log(vehicle, "its saved");
 			res.redirect(vehicle.url);
 		}
 	}),
