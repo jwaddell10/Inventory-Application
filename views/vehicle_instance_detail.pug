@@ -1,0 +1,23 @@
+extends layout 
+
+block content
+    h1=title
+
+    if vehicleinstance
+        strong Make and Model:
+        |  #{vehicleinstance.vehicle.make} #{vehicleinstance.model.modelname}
+        br
+        strong Summary: 
+        | #{vehicleinstance.model.summary}
+        br
+        strong Number In Stock:
+        |  #{vehicleinstance.model.number_in_stock}
+        br
+        strong Price: 
+        |  #{vehicleinstance.model.price}
+        br
+        strong Vehicle Status: 
+            | #{vehicleinstance.status}
+            if vehicleinstance.status !== 'Available'
+                br
+                span (Due: #{vehicleinstance.due_back_formatted} )

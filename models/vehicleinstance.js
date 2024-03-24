@@ -20,7 +20,7 @@ VehicleInstanceSchema.virtual("due_back_formatted").get(function () {
 
 VehicleInstanceSchema.virtual("url").get(function () {
 	// We don't use an arrow function as we'll need the this object
-	return `/catalog/vehicleinstances`;
+	return `/catalog/vehicleinstances/${this._id}`;
 });
 
 module.exports = mongoose.model("VehicleInstance", VehicleInstanceSchema);
