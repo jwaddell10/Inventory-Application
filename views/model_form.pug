@@ -6,16 +6,21 @@ block content
 
     form(method="POST")
         div.form-group
-            label(for="modelname") Model Name:
-            input#model_name.form-control(type="text" placeholder="Model name (Civic)"
-            name="modelname" required value=(undefined===model_name ? '' : model_name) )
+            label(for="modelname") Model: 
+            select#modelname.form-control(name="modelname" required)
+                option(value="") --Please select a Model--
+                each item in models
+                    option(value=item._id) #{item.modelname}
+        div.form-group
             label(for="summary") Summary: 
             input#summary.form-control(type="text" placeholder="Details about the car here..."
             name="summary" required value=(undefined===summary ? '' : summary))
+        div.form-group
             label(for="price") Price: 
             input#price.form-control(type="number" placeholder="What's the price?"
             name="price" required value=(undefined===price ? '' : price))
-            button.btn.btn-primary(type='submit') Submit
+        button.btn.btn-primary(type='submit') Submit
+
 
     if errors 
         ul 

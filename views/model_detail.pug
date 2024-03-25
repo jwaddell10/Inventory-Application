@@ -3,13 +3,14 @@ extends layout
 block content
     h1= title
     if model_detail
-        strong Make: #{model_detail.make}
+        strong Model: 
+        |  #{model_detail.modelname}
         br
-        strong Model: #{model_detail.modelname}
+        strong Summary: 
+        |  #{model_detail.summary}
         br
-        strong Summary: #{model_detail.summary}
-        br
-        strong Price: #{model_detail.price}
+        strong Price: 
+        |  #{model_detail.price}
         hr
         p
             a(href=model_detail.url+'/delete') Delete model

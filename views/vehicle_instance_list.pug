@@ -18,4 +18,7 @@ block content
                     if vehicle.status !== 'Available'
                         br
                         span (Due: #{vehicle.due_back_formatted} )
+                    br
+                    a(href=`/catalog/vehicleinstance/${vehicle._id}`) View Details
+
 

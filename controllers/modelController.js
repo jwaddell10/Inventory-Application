@@ -27,7 +27,15 @@ exports.model_detail = asyncHandler(async (req, res, next) => {
 });
 
 exports.model_create_get = asyncHandler(async (req, res, next) => {
-	res.render("model_form", { title: "Create Model" });
+	// console.log(req.body, 'thisis req body in createget')
+	const allModels = await Model.find({
+		modelname: {
+			$in: ["Civic", "Accord", "Ridgeline", "CR-V", "Passport"],
+		},
+	})
+		.sort({ name: 1 })
+		.exec();
+	res.render("model_form", { title: "Create Model", models: allModels });
 });
 
 exports.model_create_post = [
@@ -44,6 +52,9 @@ exports.model_create_post = [
 	body("price", "Must be a number").trim().isNumeric().escape(),
 
 	asyncHandler(async (req, res, next) => {
+		console.log("is this running");
+		console.log(req.body, "this is req body modelpost");
+
 		const errors = validationResult(req);
 
 		const model = new Model({
@@ -52,30 +63,24 @@ exports.model_create_post = [
 			price: req.body.price,
 		});
 
+		console.log(model, "this is model from createmodel");
+
 		if (!errors.isEmpty()) {
 			res.render("model_form", {
 				title: "Create Model",
-				model: model,
+				model,
 				errors: errors.array(),
 			});
 			return;
 		} else {
-			console.log(
-				req,
-				req.body.modelname,
-				req.body,
-				"this is req name in model"
-			);
-			const modelInfoExists = await Model.findOne({
-				name: req.body.modelname,
+			console.log("is this running?");
+			const modelExists = await Model.findOne({
+				model: req.body.modelname,
 				summary: req.body.summary,
 				price: req.body.price,
-			})
-				.collation({ locale: "en", strength: 2 })
-				.exec();
-
-			if (modelInfoExists) {
-				res.redirect(modelInfoExists.url);
+			}).exec();
+			if (modelExists) {
+				res.redirect(modelExists.url);
 			} else {
 				console.log(`${this._id}`, "its saving");
 				await model.save();
