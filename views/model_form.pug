@@ -9,8 +9,14 @@ block content
             label(for="modelname") Model: 
             select#modelname.form-control(name="modelname" required)
                 option(value="") --Please select a Model--
-                each item in models
-                    option(value=item._id) #{item.modelname}
+                for item in models
+                    if model
+                        if item._id.toString()===model._id.toString()
+                            option(value=model._id selected) #{item.modelname}
+                        else
+                            option(value=item._id) #{item.modelname}
+                    else 
+                        option(value=item._id) #{item.modelname}
         div.form-group
             label(for="summary") Summary: 
             input#summary.form-control(type="text" placeholder="Details about the car here..."
