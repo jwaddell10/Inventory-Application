@@ -27,22 +27,12 @@ exports.model_detail = asyncHandler(async (req, res, next) => {
 });
 
 exports.model_create_get = asyncHandler(async (req, res, next) => {
-	// console.log(req.body, 'thisis req body in createget')
-	const allModels = await Model.find({
-		modelname: {
-			$in: ["Civic", "Accord", "Ridgeline", "CR-V", "Passport"],
-		},
-	})
-		.sort({ name: 1 })
-		.exec();
+	const allModels = await Model.find().sort().exec();
 	res.render("model_form", { title: "Create Model", models: allModels });
 });
 
 exports.model_create_post = [
-	body("modelname", "Must contain at least 1 character")
-		.trim()
-		.isLength({ min: 1 })
-		.isAlpha()
+	body("modelname")
 		.escape(),
 	body("summary", "Must be at least 1 character")
 		.trim()
@@ -63,7 +53,7 @@ exports.model_create_post = [
 			price: req.body.price,
 		});
 
-		console.log(model, "this is model from createmodel");
+		console.log(model, 'this is model from createmodel')
 
 		if (!errors.isEmpty()) {
 			res.render("model_form", {
@@ -73,19 +63,9 @@ exports.model_create_post = [
 			});
 			return;
 		} else {
-			console.log("is this running?");
-			const modelExists = await Model.findOne({
-				model: req.body.modelname,
-				summary: req.body.summary,
-				price: req.body.price,
-			}).exec();
-			if (modelExists) {
-				res.redirect(modelExists.url);
-			} else {
-				console.log(`${this._id}`, "its saving");
-				await model.save();
-				res.redirect(model.url);
-			}
+			console.log(`${this._id}`, "its saving");
+			await model.save();
+			res.redirect(model.url);
 		}
 	}),
 ];
