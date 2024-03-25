@@ -32,7 +32,7 @@ exports.model_create_get = asyncHandler(async (req, res, next) => {
 });
 
 exports.model_create_post = [
-	body("modelname")
+	body("model")
 		.trim()
 		.isLength({ min: 1 })
 		.escape(),
@@ -44,18 +44,15 @@ exports.model_create_post = [
 	body("price", "Must be a number").trim().isNumeric().escape(),
 
 	asyncHandler(async (req, res, next) => {
-		console.log("is this running");
 		console.log(req.body, "this is req body modelpost");
 
 		const errors = validationResult(req);
 
 		const model = new Model({
-			modelname: req.body.modelname,
+			modelname: req.body.model,
 			summary: req.body.summary,
 			price: req.body.price,
 		});
-
-		console.log(model, 'this is model from createmodel')
 
 		if (!errors.isEmpty()) {
 			res.render("model_form", {
@@ -65,7 +62,7 @@ exports.model_create_post = [
 			});
 			return;
 		} else {
-			console.log(`${this._id}`, "its saving");
+			console.log(model, "this is the model that's saving");
 			await model.save();
 			res.redirect(model.url);
 		}

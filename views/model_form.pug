@@ -6,17 +6,17 @@ block content
 
     form(method="POST")
         div.form-group
-            label(for="modelname") Model: 
-            select#modelname.form-control(name="modelname" required)
+            label(for="model") Model: 
+            select#model.form-control(name="model" required)
                 option(value="") --Please select a Model--
                 for item in models
                     if model
                         if item._id.toString()===model._id.toString()
-                            option(value=model._id selected) #{item.modelname}
+                            option(value=model.name selected) #{item.modelname}
                         else
-                            option(value=item._id) #{item.modelname}
+                            option(value=item.name) #{item.modelname}
                     else 
-                        option(value=item._id) #{item.modelname}
+                        option(value=item.name) #{item.modelname}
         div.form-group
             label(for="summary") Summary: 
             input#summary.form-control(type="text" placeholder="Details about the car here..."
