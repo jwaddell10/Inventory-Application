@@ -6,11 +6,11 @@ block content
 
     form(method="POST")
         div.form-group
-            label(for="model") Model: 
-            select#model.form-control(name="model" required)
+            label(for="modelname") Model: 
+            select#modelname.form-control(name="modelname" required)
                 option(value="") --Please select a Model--
-                for model in models 
-                    option(value="") #{model.modelname}
+                each item in models
+                    option(value=item._id) #{item.modelname}
         div.form-group
             label(for="summary") Summary: 
             input#summary.form-control(type="text" placeholder="Details about the car here..."
@@ -20,6 +20,7 @@ block content
             input#price.form-control(type="number" placeholder="What's the price?"
             name="price" required value=(undefined===price ? '' : price))
         button.btn.btn-primary(type='submit') Submit
+
 
     if errors 
         ul 

@@ -47,7 +47,6 @@ exports.vehicle_list = asyncHandler(async (req, res, next) => {
 
 exports.vehicle_detail = asyncHandler(async (req, res, next) => {
 	//data isnt displaying properly on view for some reason
-	console.log(req.params, "this is req params veh detail");
 	const findVehicles = await Vehicle.findById(req.params.id)
 		.populate({
 			path: "model",
@@ -102,9 +101,6 @@ exports.vehicle_create_post = [
 
 	asyncHandler(async (req, res, next) => {
 		const errors = validationResult(req);
-		console.log(req, "this is req");
-		console.log(req.body, "this is req.body");
-		console.log(req.params, "thisis req params");
 		const vehicle = new Vehicle({
 			make: req.body.make,
 			model: req.body.model,
@@ -113,7 +109,6 @@ exports.vehicle_create_post = [
 			price: req.body.price,
 			vehicle_type: req.body.vehicle_type,
 		});
-		console.log(vehicle, "this is vehicle to save");
 
 		if (!errors.isEmpty()) {
 			const [allModels, allVehicleTypes] = await Promise.all([
@@ -131,7 +126,6 @@ exports.vehicle_create_post = [
 			return;
 		} else {
 			await vehicle.save();
-			console.log(vehicle, "its saved");
 			res.redirect(vehicle.url);
 		}
 	}),
@@ -165,8 +159,6 @@ exports.vehicle_delete_post = asyncHandler(async (req, res, next) => {
 });
 
 exports.vehicle_update_get = asyncHandler(async (req, res, next) => {
-	console.log(req.params, "thisis req in updateget");
-
 	const [vehicle, allModels, allVehicleTypes] = await Promise.all([
 		Vehicle.findById(req.params.id).populate("model").exec(),
 		Model.find().sort().exec(),
@@ -178,10 +170,6 @@ exports.vehicle_update_get = asyncHandler(async (req, res, next) => {
 		err.status = 404;
 		return next(err);
 	}
-
-	// allVehicleTypes.forEach((type) => {
-	// 	if (vehicle.type.includes(type._id)) type.checked = "true";
-	// });
 
 	res.render("vehicle_form", {
 		title: "Update Vehicle",
@@ -242,10 +230,6 @@ exports.vehicle_update_post = [
 			});
 			return;
 		} else {
-			console.log(
-				Vehicle.findByIdAndUpdate(req.params.id),
-				"this is veh find"
-			);
 			const updatedVehicle = await Vehicle.findByIdAndUpdate(
 				req.params.id,
 				vehicle,
