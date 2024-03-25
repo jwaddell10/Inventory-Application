@@ -45,7 +45,7 @@ exports.model_create_post = [
 
 	asyncHandler(async (req, res, next) => {
 		console.log("is this running");
-		console.log(req.body, "this is req body modelpost");
+		console.log(req.body, req.params, "this is req body modelpost");
 
 		const errors = validationResult(req);
 
