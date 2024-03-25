@@ -75,7 +75,7 @@ exports.vehicletype_create_post = [
 				req.body.name.slice(1).toLowerCase(),
 		});
 		if (!errors.isEmpty()) {
-			console.log(errors.array()); // Log the errors to the console
+			console.log(errors.array());
 			res.render("vehicle_type_form", {
 				title: "Create Vehicle Type",
 				type: "",

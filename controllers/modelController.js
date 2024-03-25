@@ -33,6 +33,8 @@ exports.model_create_get = asyncHandler(async (req, res, next) => {
 
 exports.model_create_post = [
 	body("modelname")
+		.trim()
+		.isLength({ min: 1 })
 		.escape(),
 	body("summary", "Must be at least 1 character")
 		.trim()
@@ -58,7 +60,7 @@ exports.model_create_post = [
 		if (!errors.isEmpty()) {
 			res.render("model_form", {
 				title: "Create Model",
-				model,
+				model: model,
 				errors: errors.array(),
 			});
 			return;
