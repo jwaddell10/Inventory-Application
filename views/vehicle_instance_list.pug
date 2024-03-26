@@ -6,19 +6,17 @@ block content
         ul 
             each vehicle in vehicle_instance_list
                 li 
-                    strong Vehicle: 
-                    | #{vehicle.vehicle.make}
-                    | #{vehicle.model.modelname}
+                    strong Vehicle:
+                    |  Honda #{vehicle.model.modelname}
                     br
-                    strong Price: 
-                    | $#{vehicle.vehicle.price}
+                    strong Price:
+                    |  $#{vehicle.model.price}
                     br
-                    strong Vehicle Status: 
-                    | #{vehicle.status}
+                    strong Vehicle Status:
+                    |  #{vehicle.status}
                     if vehicle.status !== 'Available'
                         br
                         span (Due: #{vehicle.due_back_formatted} )
-                    br
-                    a(href=`/catalog/vehicleinstance/${vehicle._id}`) View Details
+                a(href=`/catalog/vehicleinstance/${vehicle._id}`) View Details
 
 

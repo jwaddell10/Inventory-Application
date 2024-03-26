@@ -1,0 +1,44 @@
+extends layout
+
+block content
+
+    h1=title
+
+    form(method="POST")
+        div.form-group
+            label(for="vehicle") Vehicle: 
+            select#vehicle.form-control(name="vehicle" required)
+                option(value="") --Please select a Vehicle--
+                for vehicle in vehicle_list
+                    if selected_vehicle==vehicle._id.toString()
+                        option(value=vehicle._id, selected) #{vehicle.make}
+                    else 
+                        option(value=vehicle._id) #{vehicle.make}
+        div.form-group
+            label(for="model") Model: 
+            select#model.form-control(name="model" required)
+                option(value="") --Please select a Model--
+                for model in model_list
+                    if vehicleinstance
+                        if model._id.toString()===vehicleinstance._id.toString()
+                            option(value=model._id selected) #{model.modelname}
+                        else
+                            option(value=model._id) #{model.modelname}
+                    else 
+                        option(value=model._id) #{model.modelname}
+        div.form-group
+            label(for="status") Status: 
+            select#status.form-control(name="status")
+                option(value="status") --Please select a status (optional)--
+                each status in status_list 
+                    option(value=status) #{status}
+        div.form-group
+            label(for='due_back') Date when vehicle available:
+            input#due_back.form-control(type='date' name='due_back' value=(undefined===vehicleinstance ? '' : vehicleinstance.due_back_yyyy_mm_dd))
+            button.btn.btn-primary(type='submit') Submit
+
+
+    if errors 
+        ul 
+            for error in errors 
+                li!= error.msg

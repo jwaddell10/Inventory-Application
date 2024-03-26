@@ -109,6 +109,7 @@ exports.vehicle_create_post = [
 			price: req.body.price,
 			vehicle_type: req.body.vehicle_type,
 		});
+		console.log(vehicle, 'thisis vehicle')
 
 		if (!errors.isEmpty()) {
 			const [allModels, allVehicleTypes] = await Promise.all([
@@ -126,6 +127,7 @@ exports.vehicle_create_post = [
 			return;
 		} else {
 			await vehicle.save();
+			console.log(vehicle, 'this vehicle saved')
 			res.redirect(vehicle.url);
 		}
 	}),

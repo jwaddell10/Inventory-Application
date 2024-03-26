@@ -5,19 +5,25 @@ block content
 
     if vehicleinstance
         strong Make and Model:
-        |  #{vehicleinstance.vehicle.make} #{vehicleinstance.model.modelname}
+        |  #{vehicleinstance.vehicle.make} #{vehicleinstance.vehicle.model.modelname}
         br
         strong Summary: 
-        | #{vehicleinstance.model.summary}
+        | #{vehicleinstance.vehicle.model.summary}
         br
         strong Number In Stock:
-        |  #{vehicleinstance.model.number_in_stock}
+        |  #{vehicleinstance.vehicle.model.number_in_stock}
         br
         strong Price: 
-        |  #{vehicleinstance.model.price}
+        |  $#{vehicleinstance.vehicle.model.price}
         br
         strong Vehicle Status: 
             | #{vehicleinstance.status}
             if vehicleinstance.status !== 'Available'
                 br
                 span (Due: #{vehicleinstance.due_back_formatted} )
+
+        hr
+        p
+            a(href=vehicleinstance.detailUrl+'/delete') Delete Vehicle
+        p
+            a(href=vehicleinstance.detailUrl+'/update') Update Vehicle
