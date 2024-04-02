@@ -2,3 +2,28 @@ extends layout
 
 block content 
     h1=title
+        if vehicleinstance 
+            #{vehicleinstance}
+
+
+
+    //- if vehicle 
+    //-     strong Make and Model:
+    //-         | #{vehicle.make} #{vehicle.model ? vehicle.model.modelname : ''}
+    //-         br
+    //-         strong Summary:
+    //-         | #{vehicle.model ? vehicle.model.summary : ''}
+    //-         br
+    //-         strong Number in Stock:
+    //-         | #{vehicle.model ? vehicle.model.number_in_stock : ''}
+    //-         br
+    //-         strong Price:
+    //-         | $#{vehicle.model ? vehicle.model.price : ''} 
+
+    //-         p Do you really want to delete this model?
+
+    //-         form(method='POST')
+    //-             div.form-group
+    //-                 input#vehicleid.form-control(type='hidden' name='vehicle' value=vehicle._id)
+
+    //-             button.btn.btn-primary(type='submit') Delete
