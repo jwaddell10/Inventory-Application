@@ -14,7 +14,6 @@ const VehicleType = require("./models/vehicletype");
 const VehicleInstance = require("./models/vehicleinstance");
 
 const vehicles = [];
-console.log(vehicles, "this is vehicles");
 const models = [];
 const vehicletypes = [];
 const vehicleinstances = [];
